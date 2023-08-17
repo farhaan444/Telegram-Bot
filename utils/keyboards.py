@@ -9,9 +9,9 @@ main_menu = InlineKeyboardMarkup(main_menu)
 
 # flght route menu
 # One way or Return (no support for multicity)
-direction_type = [[InlineKeyboardButton(
+flight_type_menu = [[InlineKeyboardButton(
     '➡️ One Way', callback_data='oneway'), InlineKeyboardButton('↩️ Return', callback_data='return')]]
-direction_type = InlineKeyboardMarkup(direction_type)
+flight_type_menu = InlineKeyboardMarkup(flight_type_menu)
 
 
 def flight_result_menu(link):

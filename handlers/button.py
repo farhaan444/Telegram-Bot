@@ -6,7 +6,7 @@ from telegram.ext import ContextTypes
 from utils.flight_search import next_step
 
 # KEY BOARD IMPORTS
-from utils.keyboards import direction_type, main_menu
+from utils.keyboards import flight_type_menu, main_menu
 
 
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -25,7 +25,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         context.user_data['How Many Adults'] = None
         context.user_data['currency'] = 'ZAR'
         context.user_data['flight_type'] = None
-        await context.bot.send_message(chat_id=chat_id, reply_markup=direction_type, text='Please select option 👇')
+        await context.bot.send_message(chat_id=chat_id, reply_markup=flight_type_menu, text='Please select option 👇')
 
     if callback_data == 'oneway' or callback_data == 'return':
         # This will delete the inline keyboard after user has clicked on option
