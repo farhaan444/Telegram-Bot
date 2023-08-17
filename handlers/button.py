@@ -11,9 +11,9 @@ from utils.keyboards import flight_type_menu, main_menu
 
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """This function is a CALLBACKQUERY HANDLER. This function will handler any callback queries from any inline keyboard"""
-    callback_data = update.callback_query
-    await callback_data.answer()
-    callback_data = update.callback_query.data
+    callback = update.callback_query
+    await callback.answer()
+    callback_data = callback.data
     chat_id = update.effective_chat.id
 
     if callback_data == 'start_flight_search':
@@ -31,7 +31,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if callback_data == 'oneway' or callback_data == 'return':
         # This will delete the inline keyboard after user has clicked on option
-        current_menu = update.callback_query
+        current_menu = callback
         await current_menu.delete_message()
 
         if callback_data == 'oneway':
