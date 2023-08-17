@@ -3,9 +3,9 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton,
 # INLINE KEYBOARDS
 
 # Start menu
-start_menu = [[InlineKeyboardButton(
+main_menu = [[InlineKeyboardButton(
     '🔎 Flight Search', callback_data='start_flight_search'), InlineKeyboardButton('🔔 Flight Alerts', callback_data='#')]]
-start_menu = InlineKeyboardMarkup(start_menu)
+main_menu = InlineKeyboardMarkup(main_menu)
 
 # flght route menu
 # One way or Return (no support for multicity)
@@ -18,7 +18,7 @@ def flight_result_menu(link):
     """This function takes a url arg and constructs a inline keyboard button that when clicked will open externaly.
     It will also add a tracking button. Callback_data = None for the link button"""
     button = [[InlineKeyboardButton(
-        '✈️ Book Your Flight ✈️', url=link, callback_data=None)]]
+        '✈️ Book Your Flight ✈️', url=link, callback_data=None)], [InlineKeyboardButton('≡ Menu', callback_data="main_menu")]]
     menu = InlineKeyboardMarkup(button)
     return menu
 

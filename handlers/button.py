@@ -6,7 +6,7 @@ from telegram.ext import ContextTypes
 from utils.flight_search import next_step
 
 # KEY BOARD IMPORTS
-from utils.keyboards import direction_type
+from utils.keyboards import direction_type, main_menu
 
 
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -41,3 +41,6 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         elif callback_data == 'return':
             context.user_data['flight_type'] = 'RETURN'
             await next_step(update=update, context=context)
+
+    if callback_data == 'main_menu':
+        await context.bot.send_message(chat_id=chat_id, text='🤖 What can i do for you? 👇', reply_markup=main_menu)
