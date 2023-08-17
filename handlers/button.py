@@ -11,6 +11,8 @@ from utils.keyboards import flight_type_menu, main_menu
 
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """This function is a CALLBACKQUERY HANDLER. This function will handler any callback queries from any inline keyboard"""
+    callback_data = update.callback_query
+    await callback_data.answer()
     callback_data = update.callback_query.data
     chat_id = update.effective_chat.id
 
