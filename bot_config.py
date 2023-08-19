@@ -41,7 +41,7 @@ class TelegramBot:
         self.app.add_handler(MessageHandler(
             callback=converstaion, filters=filters.TEXT))
 
-        # MISQ VARIABLES
+        # RUN BUILD
         self.check_memory()
         self.app.run_polling()
 

@@ -147,9 +147,9 @@ async def next_step(update, context):
             if key == 'Destination Airport':
                 return await context.bot.send_message(chat_id=chat_id, text='🛬 Please provide your destination city.')
             if key == 'Departure Date (Earliest)':
-                return await context.bot.send_message(chat_id=chat_id, text='📅 Please enter your earliest departure date.')
+                return await context.bot.send_message(chat_id=chat_id, text='📅 Please enter your earliest departure date. e.g Day/Month/Year')
             if key == 'Departure Date (Latest)':
-                return await context.bot.send_message(chat_id=chat_id, text='📅 Please enter your latest departure date.')
+                return await context.bot.send_message(chat_id=chat_id, text='📅 Please enter your latest departure date. e.g Day/Month/Year')
             if key == 'Minimum Lenth Of Stay':
                 return await context.bot.send_message(chat_id=chat_id, text='🏨 Please enter your minimum lenth of stay.')
             if key == 'Maximum Lenth Of Stay':
@@ -160,13 +160,13 @@ async def next_step(update, context):
 
     # This checks if all data has been fullfilled and iniates flight search and send out result
     if context.user_data['How Many Adults'] != None:
-        await context.bot.send_message(chat_id=chat_id, text='Searching for flights... 🔎')
+        await context.bot.send_message(chat_id=chat_id, text='🤖 Searching for flights... 🔎')
         result = search_flights(user_data=context.user_data)
         if result == False:
             await context.bot.send_message(chat_id=chat_id, text='🤖 looks like im offline, sorry. Please try again later.')
         elif result == None:
-            await context.bot.send_message(chat_id=chat_id, text='Sorry, no flights found at this moment. Try again later.')
+            await context.bot.send_message(chat_id=chat_id, text='🤖 Sorry, no flights found at this moment. Try again later.')
         else:
-            reply = f'📍 {result[3]} To {result[2]}\n\n❗Flight Type: {context.user_data["flight_type"]}\n\n💵 Cheapest Price: R{result[0]}'
+            reply = f'Cheapest flight!\n\n📍 {result[3].capitalize()} To {result[2].capitalize()}\n\n❗Flight Type: {context.user_data["flight_type"]}\n\n💵 Cheapest Price: R{result[0]}'
             link = flight_result_menu(link=result[1])
             await context.bot.send_message(chat_id=chat_id, text=reply, reply_markup=link)

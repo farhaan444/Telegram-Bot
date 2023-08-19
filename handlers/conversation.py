@@ -1,13 +1,19 @@
 # MESSAGE HANDLER
 
+# PTB IMPORTS
 from telegram import Update
 from telegram.ext import ContextTypes
 from utils.flight_search import get_airports, format_date, is_date_in_past, validate_number, next_step
+from telegram.constants import ChatAction
 
 # KEY BOARD IMPORTS
 from utils.keyboards import airport_menu, flight_type_menu, main_menu
 
+# DECORATOR IMPORTS
+from utils.decorators import send_action
 
+
+@send_action(action=ChatAction.TYPING)
 async def converstaion(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwargs):
     """This function is a MESSAGE HANDLER. This function will optionaly take a keyword argument to initate a chat from the bot"""
 
