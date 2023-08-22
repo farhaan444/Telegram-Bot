@@ -169,4 +169,7 @@ async def next_step(update, context):
         else:
             reply = f'Cheapest flight!\n\n📍 {result[3].capitalize()} To {result[2].capitalize()}\n\n❗Flight Type: {context.user_data["flight_type"]}\n\n💵 Cheapest Price: R{result[0]}'
             link = flight_result_menu(link=result[1])
+            # Save link and price to temp data to access for other functions
+            context.user_data['link'] = result[1]
+            context.user_data['price'] = result[0]
             await context.bot.send_message(chat_id=chat_id, text=reply, reply_markup=link)

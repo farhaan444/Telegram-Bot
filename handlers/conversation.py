@@ -40,7 +40,7 @@ async def converstaion(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwa
                             else:
                                 airports_list = airport_menu(
                                     airports=airports_list)
-                                await context.bot.send_message(chat_id=chat_id, reply_markup=airports_list, text='Please choose a Airport from the list 👇')
+                                await context.bot.send_message(chat_id=chat_id, reply_markup=airports_list, text='🤖 Please choose a Airport from the list 👇')
                                 break
                         else:
                             colon_index = text.find(':')
@@ -61,7 +61,7 @@ async def converstaion(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwa
                             else:
                                 airports_list = airport_menu(
                                     airports=airports_list)
-                                await context.bot.send_message(chat_id=chat_id, reply_markup=airports_list, text='Please choose a Airport from the list 👇')
+                                await context.bot.send_message(chat_id=chat_id, reply_markup=airports_list, text='🤖 Please choose a Airport from the list 👇')
                                 break
                         else:
                             colon_index = text.find(':')

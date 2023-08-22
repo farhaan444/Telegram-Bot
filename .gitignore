@@ -176,4 +176,7 @@ pyrightconfig.json
 # Visual Studio Code IDE 
 .vscode
 
+# DATABASE FILES 
+database/*
+
 # End of https://www.toptal.com/developers/gitignore/api/python

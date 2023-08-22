@@ -14,13 +14,42 @@ flight_type_menu = [[InlineKeyboardButton(
 flight_type_menu = InlineKeyboardMarkup(flight_type_menu)
 
 
-def flight_result_menu(link):
+def flight_result_menu(link, tracked=False, err=False):
     """This function takes a url arg and constructs a inline keyboard button that when clicked will open externaly.
-    It will also add a tracking button. Callback_data = None for the link button"""
-    button = [[InlineKeyboardButton(
-        '✈️ Book Your Flight ✈️', url=link, callback_data=None)], [InlineKeyboardButton('≡ Menu', callback_data="main_menu")]]
-    menu = InlineKeyboardMarkup(button)
-    return menu
+    It will also add a tracking button. Callback_data = None for the link button
+    tracked arg set to true to replace track Price to Flight tracked -- Default False"""
+    if link == None:
+        link == 'Link'
+    if tracked:
+        row1 = [InlineKeyboardButton(
+            '✈️ Book Your Flight ✈️', url=link, callback_data=None)]
+        row2 = [InlineKeyboardButton(
+            '✅ Flight tracking created', callback_data='None')]
+        row3 = [InlineKeyboardButton('🔎 New Flight Search', callback_data='start_flight_search'),
+                InlineKeyboardButton('≡ Menu', callback_data="main_menu")]
+        button = [row1, row2, row3]
+        menu = InlineKeyboardMarkup(button)
+        return menu
+    elif err:
+        row1 = [InlineKeyboardButton(
+            '✈️ Book Your Flight ✈️', url=link, callback_data=None)]
+        row2 = [InlineKeyboardButton(
+            '❌ Error! Flight Search Expired', callback_data='None')]
+        row3 = [InlineKeyboardButton('🔎 New Flight Search', callback_data='start_flight_search'),
+                InlineKeyboardButton('≡ Menu', callback_data="main_menu")]
+        button = [row1, row2, row3]
+        menu = InlineKeyboardMarkup(button)
+        return menu
+    else:
+        row1 = [InlineKeyboardButton(
+            '✈️ Book Your Flight ✈️', url=link, callback_data=None)]
+        row2 = [InlineKeyboardButton(
+            '🔔 Track Price', callback_data='track_flight')]
+        row3 = [InlineKeyboardButton('🔎 New Flight Search', callback_data='start_flight_search'),
+                InlineKeyboardButton('≡ Menu', callback_data="main_menu")]
+        button = [row1, row2, row3]
+        menu = InlineKeyboardMarkup(button)
+        return menu
 
 
 # REPLY KEYBOARDS

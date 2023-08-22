@@ -3,10 +3,12 @@
 
 from telegram import Update
 from telegram.ext import ContextTypes
+import config
 from utils.flight_search import next_step
+from utils.database import DB
 
 # KEY BOARD IMPORTS
-from utils.keyboards import flight_type_menu, main_menu
+from utils.keyboards import flight_type_menu, main_menu, flight_result_menu
 
 
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -15,6 +17,9 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await callback.answer()
     callback_data = callback.data
     chat_id = update.effective_chat.id
+    first_name = update.effective_chat.first_name
+    last_name = update.effective_chat.last_name
+    username = update.effective_chat.username
 
     if callback_data == 'start_flight_search':
         context.user_data.clear()
@@ -27,7 +32,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         context.user_data['How Many Adults'] = None
         context.user_data['currency'] = 'ZAR'
         context.user_data['flight_type'] = None
-        await context.bot.send_message(chat_id=chat_id, reply_markup=flight_type_menu, text='Please select option 👇')
+        await context.bot.send_message(chat_id=chat_id, reply_markup=flight_type_menu, text='🤖 Please select option 👇')
 
     if callback_data == 'oneway' or callback_data == 'return':
         # This will delete the inline keyboard after user has clicked on option
@@ -46,3 +51,39 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if callback_data == 'main_menu':
         await context.bot.send_message(chat_id=chat_id, text='🤖 What can i do for you? 👇', reply_markup=main_menu)
+
+    if callback_data == 'track_flight':
+        if context.user_data['link'] != None:
+            db = DB(file=config.DATABASE_PATH)
+
+            menu = flight_result_menu(
+                link=context.user_data['link'], tracked=True)
+
+            Departure_Airport = context.user_data['Departure Airport']
+            Destination_Airport = context.user_data['Destination Airport']
+            Departure_Date_Earliest = context.user_data['Departure Date (Earliest)']
+            Departure_Date_Latest = context.user_data['Departure Date (Latest)']
+            Minimum_Lenth_Of_Stay = context.user_data['Minimum Lenth Of Stay']
+            Maximum_Lenth_Of_Stay = context.user_data['Maximum Lenth Of Stay']
+            How_Many_Adults = context.user_data['How Many Adults']
+            currency = context.user_data['currency']
+            flight_type = context.user_data['flight_type']
+            price = context.user_data['price']
+
+            # add user if not exist
+            user = db.cursor.execute(
+                "SELECT * FROM users WHERE chat_id = ?", (chat_id,)).fetchone()
+            if user != None:
+                db.add_flight_data(chat_id=chat_id, fly_from=Departure_Airport, fly_to=Destination_Airport, date_from=Departure_Date_Earliest, date_to=Departure_Date_Latest,
+                                   nights_from=Minimum_Lenth_Of_Stay, nights_to=Maximum_Lenth_Of_Stay, adults=How_Many_Adults, curr=currency, flight_type=flight_type, current_price=price)
+                await callback.edit_message_reply_markup(reply_markup=menu)
+            else:
+                user_role = config.REGULAR_USER
+                db.add_user(chat_id=chat_id, username=username,
+                            first_name=first_name, last_name=last_name, role=user_role)
+                db.add_flight_data(chat_id=chat_id, fly_from=Departure_Airport, fly_to=Destination_Airport, date_from=Departure_Date_Earliest, date_to=Departure_Date_Latest,
+                                   nights_from=Minimum_Lenth_Of_Stay, nights_to=Maximum_Lenth_Of_Stay, adults=How_Many_Adults, curr=currency, flight_type=flight_type, current_price=price)
+                await callback.edit_message_reply_markup(reply_markup=menu)
+        else:
+            menu = flight_result_menu(link='No link', err=True)
+            await callback.edit_message_reply_markup(reply_markup=menu)
