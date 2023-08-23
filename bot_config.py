@@ -1,8 +1,10 @@
 import logging
 import tracemalloc
 import warnings
+import config
 from telegram.warnings import PTBDeprecationWarning
 from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, MessageHandler, filters
+from utils.jobs import flight_search_job
 
 # COMMAND IMPORTS
 from handlers.start import start
@@ -46,6 +48,11 @@ class TelegramBot:
             callback=unknown_commands, filters=filters.COMMAND))
         self.app.add_handler(MessageHandler(
             callback=converstaion, filters=filters.TEXT))
+
+        # JOBS
+        self.job_queue = self.app.job_queue
+        self.job_3_hour = self.job_queue.run_repeating(
+            callback=flight_search_job, interval=config.JOB_INTERVAL, first=config.FIRST_RUN)
 
         # RUN BUILD
         self.check_memory()

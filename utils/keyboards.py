@@ -22,10 +22,12 @@ main_menu_redirect = [[InlineKeyboardButton(
     '≡ Menu', callback_data='main_menu')]]
 main_menu_redirect = InlineKeyboardMarkup(main_menu_redirect)
 
-# Delete All menu
-
 
 def delete_all_menu(success=False):
+    """This function takes one argument: Success:Bool
+    The function will create a inline keyboard with two buttons
+    if True button1 = all flights deleted else button1 == Delete all flights.
+    button2 = Menu button redirect to main menu"""
     if success:
         menu = [[InlineKeyboardButton('✅ All flight alerts deleted', callback_data='#')], [
             InlineKeyboardButton('≡ Menu', callback_data='main_menu')]]
@@ -86,6 +88,15 @@ def flight_result_menu(link, tracked=False, err=False):
         menu = InlineKeyboardMarkup(button)
         return menu
 
+
+def flight_alert_menu(link):
+    """This function builds an inline keyboard
+    The function takes one argument: a url link must be parsed through
+    Two buttons are created, butt1= book flight, butt2= main menu redirect to main menu"""
+    menu = [[InlineKeyboardButton('✈️ Book Your Flight ✈️', url=link, callback_data=None)], [
+        InlineKeyboardButton('≡ Menu', callback_data="main_menu")]]
+    menu = InlineKeyboardMarkup(menu)
+    return menu
 
 # REPLY KEYBOARDS
 

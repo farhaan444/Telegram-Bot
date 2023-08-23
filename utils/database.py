@@ -68,3 +68,9 @@ class DB:
         self.cursor.execute('INSERT INTO flight_data (chat_id, fly_from, fly_to, date_from, date_to, nights_in_dst_from, nights_in_dst_to, adults, curr, flight_type, current_price) VALUES (?,?,?,?,?,?,?,?,?,?,?)',
                             (chat_id, fly_from, fly_to, date_from, date_to, nights_from, nights_to, adults, curr, flight_type, current_price,))
         self.commit()
+
+    def del_flight_data(self, chat_id):
+        """This method deletes a row of flight data."""
+        self.cursor.execute(
+            'DELETE FROM flight_data WHERE chat_id =?', (chat_id,))
+        self.commit()
