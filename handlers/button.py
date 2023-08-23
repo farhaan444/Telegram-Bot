@@ -7,8 +7,11 @@ import config
 from utils.flight_search import next_step
 from utils.database import DB
 
+# HANDLER IMPORTS
+from handlers.flight_alerts import flight_alerts
+
 # KEY BOARD IMPORTS
-from utils.keyboards import flight_type_menu, main_menu, flight_result_menu
+from utils.keyboards import flight_type_menu, main_menu, flight_result_menu, delete_all_menu
 
 
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -76,6 +79,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
             if user != None:
                 db.add_flight_data(chat_id=chat_id, fly_from=Departure_Airport, fly_to=Destination_Airport, date_from=Departure_Date_Earliest, date_to=Departure_Date_Latest,
                                    nights_from=Minimum_Lenth_Of_Stay, nights_to=Maximum_Lenth_Of_Stay, adults=How_Many_Adults, curr=currency, flight_type=flight_type, current_price=price)
+                db.close()
                 await callback.edit_message_reply_markup(reply_markup=menu)
             else:
                 user_role = config.REGULAR_USER
@@ -83,7 +87,18 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
                             first_name=first_name, last_name=last_name, role=user_role)
                 db.add_flight_data(chat_id=chat_id, fly_from=Departure_Airport, fly_to=Destination_Airport, date_from=Departure_Date_Earliest, date_to=Departure_Date_Latest,
                                    nights_from=Minimum_Lenth_Of_Stay, nights_to=Maximum_Lenth_Of_Stay, adults=How_Many_Adults, curr=currency, flight_type=flight_type, current_price=price)
+                db.close()
                 await callback.edit_message_reply_markup(reply_markup=menu)
         else:
             menu = flight_result_menu(link='No link', err=True)
             await callback.edit_message_reply_markup(reply_markup=menu)
+
+    if callback_data == 'get_flight_alerts':
+        await flight_alerts(update, context)
+
+    if callback_data == 'del_all_FA':
+        db = DB(file=config.DATABASE_PATH)
+        db.del_user(chat_id=chat_id)
+        db.close()
+        menu = delete_all_menu(success=True)
+        await callback.edit_message_text(text='You have no flight alerts yet. Start a flight search and create a new flight alert.', reply_markup=menu)

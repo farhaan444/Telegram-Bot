@@ -1,10 +1,14 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton, ReplyKeyboardMarkup
 
 # INLINE KEYBOARDS
+# IMPORTANT
+# ONE OF THE OPTIONAL PARAMETERS HAS TO BE SET!
+# URL PARRAMTER AND CALLBACK_DATA CANNOT BOTH BE SET!
+# IF URL IS NOT SET, CALLBACK_DATA PARRAM HAS TO BE SET! I.E IT CANNOT BE SET TO NONE!
 
 # Start menu
 main_menu = [[InlineKeyboardButton(
-    '🔎 Flight Search', callback_data='start_flight_search'), InlineKeyboardButton('🔔 Flight Alerts', callback_data='#')]]
+    '🔎 Flight Search', callback_data='start_flight_search'), InlineKeyboardButton('🔔 Flight Alerts', callback_data='get_flight_alerts')]]
 main_menu = InlineKeyboardMarkup(main_menu)
 
 # flght route menu
@@ -12,6 +16,37 @@ main_menu = InlineKeyboardMarkup(main_menu)
 flight_type_menu = [[InlineKeyboardButton(
     '➡️ One Way', callback_data='oneway'), InlineKeyboardButton('↩️ Return', callback_data='return')]]
 flight_type_menu = InlineKeyboardMarkup(flight_type_menu)
+
+# Single Button - Redidirect to start Main Menu
+main_menu_redirect = [[InlineKeyboardButton(
+    '≡ Menu', callback_data='main_menu')]]
+main_menu_redirect = InlineKeyboardMarkup(main_menu_redirect)
+
+# Delete All menu
+
+
+def delete_all_menu(success=False):
+    if success:
+        menu = [[InlineKeyboardButton('✅ All flight alerts deleted', callback_data='#')], [
+            InlineKeyboardButton('≡ Menu', callback_data='main_menu')]]
+        menu = InlineKeyboardMarkup(menu)
+        return menu
+    else:
+        menu = [[InlineKeyboardButton('❌ Delete all Flight Alerts', callback_data='del_all_FA')], [
+            InlineKeyboardButton('≡ Menu', callback_data='main_menu')]]
+        menu = InlineKeyboardMarkup(menu)
+        return menu
+
+
+def single_button(text: str, callback_data: str, url=None):
+    """This function takes two arguments, text, callback_data and url.
+    This is used to build a single button inline keyboard button.
+    callback_data and url both cannot be none"""
+    if url != None:
+        callback_data = None
+    menu = [[InlineKeyboardButton(text, callback_data=callback_data)]]
+    menu = InlineKeyboardMarkup(menu)
+    return menu
 
 
 def flight_result_menu(link, tracked=False, err=False):
@@ -24,7 +59,7 @@ def flight_result_menu(link, tracked=False, err=False):
         row1 = [InlineKeyboardButton(
             '✈️ Book Your Flight ✈️', url=link, callback_data=None)]
         row2 = [InlineKeyboardButton(
-            '✅ Flight tracking created', callback_data='None')]
+            '✅ Flight tracking created', callback_data='#')]
         row3 = [InlineKeyboardButton('🔎 New Flight Search', callback_data='start_flight_search'),
                 InlineKeyboardButton('≡ Menu', callback_data="main_menu")]
         button = [row1, row2, row3]
@@ -34,7 +69,7 @@ def flight_result_menu(link, tracked=False, err=False):
         row1 = [InlineKeyboardButton(
             '✈️ Book Your Flight ✈️', url=link, callback_data=None)]
         row2 = [InlineKeyboardButton(
-            '❌ Error! Flight Search Expired', callback_data='None')]
+            '❌ Error! Flight Search Expired', callback_data='#')]
         row3 = [InlineKeyboardButton('🔎 New Flight Search', callback_data='start_flight_search'),
                 InlineKeyboardButton('≡ Menu', callback_data="main_menu")]
         button = [row1, row2, row3]

@@ -8,6 +8,7 @@ class DB:
 
     def __init__(self, file) -> None:
         self.connection = sqlite3.connect(file)
+        self.connection.execute("PRAGMA foreign_keys = 1")
         self.cursor = self.connection.cursor()
         self.create_table()
 
@@ -53,6 +54,12 @@ class DB:
 
         self.cursor.execute('INSERT INTO users (chat_id, username, first_name, last_name, role) VALUES (?,?,?,?,?)',
                             (chat_id, username, first_name, last_name, role,))
+        self.commit()
+
+    def del_user(self, chat_id):
+        """This method will delete a user from the user database
+        This will also delete all flight alert records linked to user in the fligh_data table """
+        self.cursor.execute('DELETE FROM users WHERE chat_id =?', (chat_id,))
         self.commit()
 
     def add_flight_data(self, chat_id, fly_from, fly_to, date_from, date_to, nights_from, nights_to, adults, curr, flight_type, current_price):

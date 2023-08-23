@@ -8,6 +8,8 @@ from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandle
 from handlers.start import start
 from handlers.button import button
 from handlers.conversation import converstaion
+from handlers.unknown import unknown_commands
+from handlers.flight_alerts import flight_alerts
 
 
 # VERY IMPORTANT COMMENTS
@@ -33,11 +35,15 @@ class TelegramBot:
 
         # COMMAND HANDLERS
         self.app.add_handler(CommandHandler(command='start', callback=start))
+        self.app.add_handler(CommandHandler(
+            command='flight_alerts', callback=flight_alerts))
 
         # CALLBACK QUERY HANDLERS
         self.app.add_handler(CallbackQueryHandler(callback=button))
 
         # MESSAGE HANDLERS
+        self.app.add_handler(MessageHandler(
+            callback=unknown_commands, filters=filters.COMMAND))
         self.app.add_handler(MessageHandler(
             callback=converstaion, filters=filters.TEXT))
 
