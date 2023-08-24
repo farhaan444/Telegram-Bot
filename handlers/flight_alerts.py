@@ -1,6 +1,7 @@
 # COMMAND HANDLER
 
 from telegram import Update
+from telegram.constants import ParseMode
 from telegram.ext import ContextTypes
 from utils.database import DB
 import config
@@ -25,9 +26,9 @@ async def flight_alerts(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         alerts = []
         for i in alert_data:
-            alert = f'Location: {i[2]} - {i[3]}\nDates: {i[4]}-{i[5]}\nAdults: {i[8]}\nFlight Type: {i[10]}\nPrice: {i[11]}\n\n'
+            alert = f'<b>Location</b>: {i[2]} - {i[3]}\n<b>Dates</b>: {i[4]}-{i[5]}\n<b>Adults</b>: {i[8]}\n<b>Flight Type</b>: {i[10]}\n<b>Price</b>: {i[11]}\n\n'
             alerts.append(alert)
         response = ''
         response = response.join(alerts)
         menu = delete_all_menu()
-        await context.bot.send_message(chat_id=chat_id, text=response, reply_markup=menu)
+        await context.bot.send_message(chat_id=chat_id, text=response, reply_markup=menu, parse_mode=ParseMode.HTML)
