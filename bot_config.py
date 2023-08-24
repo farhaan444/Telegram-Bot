@@ -12,6 +12,7 @@ from handlers.button import button
 from handlers.conversation import converstaion
 from handlers.unknown import unknown_commands
 from handlers.flight_alerts import flight_alerts
+from handlers.del_flight_alert import del_flight_alert
 
 
 # VERY IMPORTANT COMMENTS
@@ -43,7 +44,9 @@ class TelegramBot:
         # CALLBACK QUERY HANDLERS
         self.app.add_handler(CallbackQueryHandler(callback=button))
 
-        # MESSAGE HANDLERS
+        # MESSAGE HANDLERS - ORDER SENSITIVE
+        self.app.add_handler(MessageHandler(
+            callback=del_flight_alert, filters=filters.Regex(r'TAP_DELETE_ID_')))
         self.app.add_handler(MessageHandler(
             callback=unknown_commands, filters=filters.COMMAND))
         self.app.add_handler(MessageHandler(

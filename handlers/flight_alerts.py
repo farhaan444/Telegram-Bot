@@ -26,7 +26,7 @@ async def flight_alerts(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         alerts = []
         for i in alert_data:
-            alert = f'<b>Location</b>: {i[2]} - {i[3]}\n<b>Dates</b>: {i[4]}-{i[5]}\n<b>Adults</b>: {i[8]}\n<b>Flight Type</b>: {i[10]}\n<b>Price</b>: {i[11]}\n\n'
+            alert = f'<b>Location</b>: {i[2]} - {i[3]}\n<b>Dates</b>: {i[4]}-{i[5]}\n<b>Adults</b>: {i[8]}\n<b>Flight Type</b>: {i[10]}\n<b>Price</b>: {i[11]}\n<b>Delete flight alert</b>: /TAP_DELETE_ID_{i[0]}\n\n'
             alerts.append(alert)
         response = ''
         response = response.join(alerts)

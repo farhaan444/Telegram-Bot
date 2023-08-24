@@ -33,7 +33,7 @@ class DB:
         # flight_data Table -- ! ON DELETE ACTION on foreign key.
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS flight_data(
                             id INTEGER PRIMARY KEY NOT NULL UNIQUE,
-                            chat_id INT NOT NULL,
+                            chat_id INTEGER NOT NULL,
                             fly_from TEXT,
                             fly_to TEXT,
                             date_from TEXT,
@@ -69,8 +69,9 @@ class DB:
                             (chat_id, fly_from, fly_to, date_from, date_to, nights_from, nights_to, adults, curr, flight_type, current_price,))
         self.commit()
 
-    def del_flight_data(self, chat_id):
-        """This method deletes a row of flight data."""
+    def del_flight_data(self, id):
+        """This method deletes a row of flight data.
+        id parameter is the index of row"""
         self.cursor.execute(
-            'DELETE FROM flight_data WHERE chat_id =?', (chat_id,))
+            'DELETE FROM flight_data WHERE id =?', (id,))
         self.commit()
