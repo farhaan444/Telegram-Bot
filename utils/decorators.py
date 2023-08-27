@@ -57,6 +57,7 @@ def check_save_alert_limit(func):
             flight_data = db.cursor.execute(
                 'SELECT * FROM flight_data WHERE chat_id = ?', (chat_id,)).fetchall()
             alerts = len(flight_data)
+            db.close()
             if alerts < config.FT_LIMIT:
                 return await func(update, context, *args, **kwargs)
             else:
