@@ -5,6 +5,7 @@ from telegram import Update
 from telegram.ext import ContextTypes
 import config
 from utils.flight_search import next_step
+from utils.decorators import check_save_alert_limit
 from utils.database import DB
 
 # HANDLER IMPORTS
@@ -14,6 +15,7 @@ from handlers.flight_alerts import flight_alerts
 from utils.keyboards import flight_type_menu, main_menu, flight_result_menu, delete_all_menu
 
 
+@check_save_alert_limit
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """This function is a CALLBACKQUERY HANDLER. This function will handler any callback queries from any inline keyboard"""
     callback = update.callback_query
@@ -25,6 +27,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     username = update.effective_chat.username
 
     if callback_data == 'start_flight_search':
+        # Start flight search
         context.user_data.clear()
         context.user_data['Departure Airport'] = None
         context.user_data['Destination Airport'] = None
@@ -38,6 +41,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_message(chat_id=chat_id, reply_markup=flight_type_menu, text='🤖 Please select option 👇')
 
     if callback_data == 'oneway' or callback_data == 'return':
+        # sends option on flight search type
         # This will delete the inline keyboard after user has clicked on option
         current_menu = callback
         await current_menu.delete_message()
@@ -53,9 +57,11 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await next_step(update=update, context=context)
 
     if callback_data == 'main_menu':
+        # This will send the user the main menu with all available options.
         await context.bot.send_message(chat_id=chat_id, text='🤖 What can i do for you? 👇', reply_markup=main_menu)
 
     if callback_data == 'track_flight':
+        # This will add flight data to db to be tracked.
         if context.user_data['link'] != None:
             db = DB(file=config.DATABASE_PATH)
 
@@ -94,9 +100,11 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await callback.edit_message_reply_markup(reply_markup=menu)
 
     if callback_data == 'get_flight_alerts':
+        # This gets list of all saved flight data that is been tracked and sends to user
         await flight_alerts(update, context)
 
     if callback_data == 'del_all_FA':
+        # This deletes all tracked flight data from db
         db = DB(file=config.DATABASE_PATH)
         db.del_user(chat_id=chat_id)
         db.close()
