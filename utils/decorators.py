@@ -16,7 +16,7 @@ def send_action(action):
     return wrapped
 
 
-def verify_user(func):
+def verify_user_on_del_alert(func):
     @wraps(func)
     async def wrapped(update, context, *args, **kwargs):
         chat_id = update.effective_chat.id
@@ -31,6 +31,6 @@ def verify_user(func):
         elif db_chat_id[0] == chat_id:
             return await func(update, context, *args, **kwargs)
         else:
-            await context.bot.send_message(chat_id=update.effective_chat.id, text='❗Unauthorzied access denied!')
+            await context.bot.send_message(chat_id=update.effective_chat.id, text='❗Sorry, you are not allowed to do this!')
             return
     return wrapped

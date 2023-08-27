@@ -39,7 +39,7 @@ async def flight_search_job(context: ContextTypes.DEFAULT_TYPE):
                     continue
                 else:
                     if result[0] < i[11]:
-                        response = f'🔻<b>PRICE DROP ON YOUR FLIGHT ALERT</b>🔻\n\n<b>Your Price alert</b>:\n{i[2]}-{i[3]}\n{i[4]}-{i[5]}\n<b>Price</b>: {i[11]}\n\n<b>PRICE DROPPED TO R</b>{result[0]}'
+                        response = f'🔻<b>PRICE DROP ON YOUR FLIGHT ALERT</b>🔻\n\n<b>Your Price alert</b>:\n{i[2]}-{i[3]}\n{i[4]}-{i[5]}\n<b>Price</b>: {i[11]}\n\n<b>PRICE DROPPED TO</b>R{result[0]}'
                         menu = flight_alert_menu(link=result[1])
                         await context.bot.send_message(chat_id=i[1], text=response, reply_markup=menu, parse_mode=ParseMode.HTML)
             else:

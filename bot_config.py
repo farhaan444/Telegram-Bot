@@ -55,7 +55,7 @@ class TelegramBot:
         # JOBS
         self.job_queue = self.app.job_queue
         self.job_3_hour = self.job_queue.run_repeating(
-            callback=flight_search_job, interval=config.JOB_INTERVAL, first=config.FIRST_RUN)
+            callback=flight_search_job, interval=config.JOB_INTERVAL_FS, first=config.FIRST_RUN_FS)
 
         # RUN BUILD
         self.check_memory()

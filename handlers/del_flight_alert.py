@@ -4,13 +4,13 @@ import config
 from telegram import Update
 from telegram.ext import ContextTypes
 from utils.database import DB
-from utils.decorators import verify_user
+from utils.decorators import verify_user_on_del_alert
 
 # KEY BOARD IMPORTS
 from utils.keyboards import main_menu
 
 
-@verify_user
+@verify_user_on_del_alert
 async def del_flight_alert(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """This function will delete the a flight data alert from the database.
     It uses the context.args to get the flight_data id from the command send to the user."""
