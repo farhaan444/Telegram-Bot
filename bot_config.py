@@ -59,7 +59,7 @@ class TelegramBot:
 
         # RUN BUILD
         self.check_memory()
-        self.app.run_polling()
+        self.app.run_polling(timeout=60)
 
     def check_memory(self):
         """Telegram bot documentation requires to check for memory issues/leaks in the bot."""

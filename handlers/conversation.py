@@ -3,7 +3,7 @@
 # PTB IMPORTS
 from telegram import Update
 from telegram.ext import ContextTypes
-from utils.flight_search import get_airports, format_date, is_date_in_past, validate_number, next_step
+from utils.flight_search import get_airports, format_date, is_date_in_past, validate_number, next_step, is_int_0
 from telegram.constants import ChatAction
 
 # KEY BOARD IMPORTS
@@ -93,13 +93,23 @@ async def converstaion(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwa
                             break
                         else:
                             if key == 'How Many Adults':
-                                context.user_data[key] = int(text)
-                                await next_step(update=update, context=context)
-                                break
+                                if is_int_0(number=text) == False:
+                                    context.user_data[key] = int(text)
+                                    await next_step(update=update, context=context)
+                                    break
+                                else:
+                                    error_msg = '🤨 I cannot accept 0 as a input. I will ask again, how many adults?'
+                                    await context.bot.send_message(chat_id=chat_id, text=error_msg)
+                                    break
                             else:
-                                context.user_data[key] = text
-                                await next_step(update=update, context=context)
-                                break
+                                if is_int_0(number=text) == False:
+                                    context.user_data[key] = text
+                                    await next_step(update=update, context=context)
+                                    break
+                                else:
+                                    error_msg = '🤨 I cannot accept 0 as a input on a return flight.'
+                                    await context.bot.send_message(chat_id=chat_id, text=error_msg)
+                                    break
         else:
             await context.bot.send_message(chat_id=chat_id, reply_markup=flight_type_menu, text='Please select option 👇')
     else:

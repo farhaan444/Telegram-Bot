@@ -77,6 +77,14 @@ def validate_number(number):
         return False
 
 
+def is_int_0(number):
+    """This function check if the arg is == 0"""
+    if int(number) == 0:
+        return True
+    else:
+        return False
+
+
 def search_flights(user_data):
     """This function takes in a dict arg of all user data need to call api to search for flights.
     The function will also search and get the cheapest price. 
@@ -163,7 +171,7 @@ async def next_step(update, context):
         await context.bot.send_message(chat_id=chat_id, text='🤖 Searching for flights... 🔎')
         result = search_flights(user_data=context.user_data)
         if result == False:
-            await context.bot.send_message(chat_id=chat_id, text='🤖 looks like im offline, sorry. Please try again later.')
+            await context.bot.send_message(chat_id=chat_id, text='🤖 looks like something went wrong, sorry. Please try again later.')
         elif result == None:
             await context.bot.send_message(chat_id=chat_id, text='🤖 Sorry, no flights found at this moment. Try again later.')
         else:
