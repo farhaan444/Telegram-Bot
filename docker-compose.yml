@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  telegrambot:
+    image: telegrambot
+    build:
+      context: .
+      dockerfile: ./Dockerfile
