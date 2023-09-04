@@ -66,9 +66,13 @@ async def converstaion(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwa
                         else:
                             colon_index = text.find(':')
                             iata = text[colon_index + 1:]
-                            context.user_data[key] = iata.lstrip()
-                            await next_step(update=update, context=context)
-                            break
+                            if iata.lstrip() != context.user_data['Departure Airport']:
+                                context.user_data[key] = iata.lstrip()
+                                await next_step(update=update, context=context)
+                                break
+                            else:
+                                await context.bot.send_message(chat_id=chat_id, text='🤖 Your destination airport cannot be the same as the departure airport. Please choose a different destination city.')
+                                break
 
                     if key == 'Departure Date (Earliest)' or key == 'Departure Date (Latest)':
                         validate_date_format = format_date(date=text)
