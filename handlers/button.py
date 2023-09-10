@@ -62,7 +62,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if callback_data == 'track_flight':
         # This will add flight data to db to be tracked.
-        if context.user_data['link'] != None:
+        if 'link' in context.user_data:
             db = DB(file=config.DATABASE_PATH)
 
             menu = flight_result_menu(
@@ -96,7 +96,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 db.close()
                 await callback.edit_message_reply_markup(reply_markup=menu)
         else:
-            menu = flight_result_menu(link='No link', err=True)
+            menu = flight_result_menu(link=None, err=True)
             await callback.edit_message_reply_markup(reply_markup=menu)
 
     if callback_data == 'get_flight_alerts':
