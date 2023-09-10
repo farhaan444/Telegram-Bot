@@ -106,7 +106,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if callback_data == 'del_all_FA':
         # This deletes all tracked flight data from db
         db = DB(file=config.DATABASE_PATH)
-        db.del_user(chat_id=chat_id)
+        db.del_all_flight_data(chat_id=chat_id)
         db.close()
         menu = delete_all_menu(success=True)
         await callback.edit_message_text(text='You have no flight alerts yet. Start a flight search and create a new flight alert.', reply_markup=menu)

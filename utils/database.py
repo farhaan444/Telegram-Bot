@@ -75,3 +75,9 @@ class DB:
         self.cursor.execute(
             'DELETE FROM flight_data WHERE id =?', (id,))
         self.commit()
+
+    def del_all_flight_data(self, chat_id):
+        """This method will delete all flight data associated with the user"""
+        self.cursor.execute(
+            'DELETE FROM flight_data WHERE chat_id = ?', (chat_id,))
+        self.commit()
