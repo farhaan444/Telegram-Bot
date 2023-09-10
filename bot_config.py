@@ -13,6 +13,7 @@ from handlers.conversation import converstaion
 from handlers.unknown import unknown_commands
 from handlers.flight_alerts import flight_alerts
 from handlers.del_flight_alert import del_flight_alert
+from handlers.flight_search_reset import flight_search_reset
 
 
 # VERY IMPORTANT COMMENTS
@@ -40,6 +41,8 @@ class TelegramBot:
         self.app.add_handler(CommandHandler(command='start', callback=start))
         self.app.add_handler(CommandHandler(
             command='flight_alerts', callback=flight_alerts))
+        self.app.add_handler(CommandHandler(
+            command='reset', callback=flight_search_reset))
 
         # CALLBACK QUERY HANDLERS
         self.app.add_handler(CallbackQueryHandler(callback=button))
