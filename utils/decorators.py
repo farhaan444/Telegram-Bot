@@ -53,15 +53,18 @@ def check_save_alert_limit(func):
         if callback_data != "track_flight":
             return await func(update, context, *args, **kwargs)
         elif callback_data == 'track_flight':
-            db = DB(file=config.DATABASE_PATH)
-            flight_data = db.cursor.execute(
-                'SELECT * FROM flight_data WHERE chat_id = ?', (chat_id,)).fetchall()
-            alerts = len(flight_data)
-            db.close()
-            if alerts < config.FT_LIMIT:
-                return await func(update, context, *args, **kwargs)
+            if config.FT_LIMIT != 0:
+                db = DB(file=config.DATABASE_PATH)
+                flight_data = db.cursor.execute(
+                    'SELECT * FROM flight_data WHERE chat_id = ?', (chat_id,)).fetchall()
+                alerts = len(flight_data)
+                db.close()
+                if alerts < config.FT_LIMIT:
+                    return await func(update, context, *args, **kwargs)
+                else:
+                    button = single_button(
+                        text='🔔 Manage flight alerts', callback_data='get_flight_alerts')
+                    return await context.bot.send_message(chat_id=chat_id, text=f'❗Only {config.FT_LIMIT} flight alerts allowed at this time.', reply_markup=button)
             else:
-                button = single_button(
-                    text='🔔 Manage flight alerts', callback_data='get_flight_alerts')
-                return await context.bot.send_message(chat_id=chat_id, text=f'❗Only {config.FT_LIMIT} flight alerts allowed at this time.', reply_markup=button)
+                return await func(update, context, *args, **kwargs)
     return wrapped

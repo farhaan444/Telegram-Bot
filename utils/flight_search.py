@@ -1,6 +1,7 @@
 import requests
 import config
 from datetime import datetime
+from telegram.constants import ParseMode
 
 # KEY BOARD IMPORTS
 from utils.keyboards import adults_menu, flight_result_menu
@@ -159,9 +160,9 @@ async def next_step(update, context):
             if key == 'Departure Date (Latest)':
                 return await context.bot.send_message(chat_id=chat_id, text='📅 Please enter your latest departure date. e.g Day/Month/Year')
             if key == 'Minimum Lenth Of Stay':
-                return await context.bot.send_message(chat_id=chat_id, text='🏨 Please enter your minimum lenth of stay.')
+                return await context.bot.send_message(chat_id=chat_id, text='🏨 Please enter your minimum length of stay.')
             if key == 'Maximum Lenth Of Stay':
-                return await context.bot.send_message(chat_id=chat_id, text='🏨 Please enter your maximum lenth of stay.')
+                return await context.bot.send_message(chat_id=chat_id, text='🏨 Please enter your maximum length of stay.')
             if key == 'How Many Adults':
                 possible_adults = adults_menu()
                 return await context.bot.send_message(chat_id=chat_id, text='👪 How many adults?', reply_markup=possible_adults)
@@ -175,9 +176,9 @@ async def next_step(update, context):
         elif result == None:
             await context.bot.send_message(chat_id=chat_id, text='🤖 Sorry, no flights found at this moment. Try again later.')
         else:
-            reply = f'Cheapest flight!\n\n📍 {result[3].capitalize()} To {result[2].capitalize()}\n\n❗Flight Type: {context.user_data["flight_type"]}\n\n💵 Cheapest Price: R{result[0]}'
+            reply = f'<b>Cheapest flight!</b>\n\n📍 <b>Fly From:</b> {result[3].capitalize()} To {result[2].capitalize()}\n\n❗<b>Flight Type:</b> {context.user_data["flight_type"]}\n\n💵 <b>Cheapest Price:</b> R{result[0]}\n\nClick on link bellow to view exact dates and duration of travel 👇'
             link = flight_result_menu(link=result[1])
             # Save link and price to temp data to access for other functions
             context.user_data['link'] = result[1]
             context.user_data['price'] = result[0]
-            await context.bot.send_message(chat_id=chat_id, text=reply, reply_markup=link)
+            await context.bot.send_message(chat_id=chat_id, text=reply, reply_markup=link, parse_mode=ParseMode.HTML)
