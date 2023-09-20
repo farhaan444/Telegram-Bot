@@ -2,14 +2,15 @@ name: Telegram Bot Test
 
 on:
   pull_request:
-    branches: -main
+    branches:
+      - main
 
 jobs:
   test:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: /TELEGRAM-BOT/
+        working-directory: /TELEGRAM-BOT
 
     strategy:
       matrix:
@@ -36,4 +37,4 @@ jobs:
           pip install -r ../requirements.txt
 
       - name: Test Bot Code
-        run: python ./bot.py
+        run: python /TELEGRAM-BOT/bot.py
