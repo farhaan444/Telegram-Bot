@@ -18,6 +18,9 @@ jobs:
     env:
       BOT_USERNAME: ${{secrets.GITHUB_TOKEN}}
       BOT_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      FIRST_RUN_FS: ${{secrets.GITHUB_TOKEN}}
+      JOB_INTERVAL_FS: ${{secrets.GITHUB_TOKEN}}
+      FT_LIMIT: ${{secrets.GITHUB_TOKEN}}
 
     steps:
       - uses: actions/checkout@v3
