@@ -1,4 +1,4 @@
-# PYTHON TELEGRAM BOT - Your Personal Flight Bot: Find the Cheapest Flights and Never Miss a Deal!
+# TELEGRAM BOT - Your Personal Flight Bot: Find the Cheapest Flights and Never Miss a Deal!
 
 _This Telegram bot allows users to conveniently find the cheapest flights and receive price alerts for their desired routes._
 
@@ -31,8 +31,8 @@ You can also save the flight result for the bot to track the flight price and th
 ### Bot Commands
 
 - `/start` - Initializes Bot welcome response.
-- `/flight_alerts` - Show all saved flight alerts
-- `/reset` - Reset the flight search
+- `/flight_alerts` - Show all saved flight alerts.
+- `/reset` - Reset the flight search.
 
 ## Getting Started
 
@@ -54,6 +54,11 @@ You can also save the flight result for the bot to track the flight price and th
    | `FIRST_RUN_FS`    | Flight Search Job Schedule first run                     | `10800`                |
    | `JOB_INTERVAL_FS` | Flight search job schedule intervals                     | `10800`                |
    | `FT_LIMIT`        | Set limit on flight alerts - 0 = Unlimited Flight alerts | `0`                    |
+
+### Database
+
+This bot only supports a SQL database file. If you have an existing database file from previous use than edit your file path in your .env file.
+The default path is database\database.db which will be created automatically on the first call on the DB instance.
 
 ## Installation
 
