@@ -17,11 +17,11 @@ jobs:
         python-version: [3.11]
 
     env:
-      BOT_USERNAME: ${{secrets.GITHUB_TOKEN}}
-      BOT_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      FIRST_RUN_FS: ${{secrets.GITHUB_TOKEN}}
-      JOB_INTERVAL_FS: ${{secrets.GITHUB_TOKEN}}
-      FT_LIMIT: ${{secrets.GITHUB_TOKEN}}
+      BOT_USERNAME: ${{secrets.BOT_USERNAME}}
+      BOT_TOKEN: ${{secrets.BOT_TOKEN}}
+      FIRST_RUN_FS: ${{secrets.FIRST_RUN_FS}}
+      JOB_INTERVAL_FS: ${{secrets.JOB_INTERVAL_FS}}
+      FT_LIMIT: ${{secrets.FT_LIMIT}}
 
     steps:
       - uses: actions/checkout@v3
