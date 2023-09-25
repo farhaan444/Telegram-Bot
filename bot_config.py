@@ -16,10 +16,6 @@ from handlers.del_flight_alert import del_flight_alert
 from handlers.flight_search_reset import flight_search_reset
 
 
-# VERY IMPORTANT COMMENTS
-# THIS IS HOW YOU CALL ANOTHER HANDLER FROM ONE HANDLER - PARAMETERS (update, context) ----> await self.func(update=update, context=context)
-
-
 class TelegramBot:
     def __init__(self, username: str, token: str) -> None:
         # TELEGRAM BOT FATHER CREDENTIALS

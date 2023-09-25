@@ -169,14 +169,14 @@ async def next_step(update, context):
 
     # This checks if all data has been fullfilled and iniates flight search and send out result
     if context.user_data['How Many Adults'] != None:
-        await context.bot.send_message(chat_id=chat_id, text='🤖 Searching for flights... 🔎')
+        await context.bot.send_message(chat_id=chat_id, text='🤖 Okay, give me a sec. Searching for flights... 🔎')
         result = search_flights(user_data=context.user_data)
         if result == False:
             await context.bot.send_message(chat_id=chat_id, text='🤖 looks like something went wrong, sorry. Please try again later.')
         elif result == None:
             await context.bot.send_message(chat_id=chat_id, text='🤖 Sorry, no flights found at this moment. Try again later.')
         else:
-            reply = f'<b>Cheapest flight!</b>\n\n📍 <b>Fly From:</b> {result[3].capitalize()} To {result[2].capitalize()}\n\n❗<b>Flight Type:</b> {context.user_data["flight_type"]}\n\n💵 <b>Cheapest Price:</b> R{result[0]}\n\nClick on link bellow to view exact dates and duration of travel 👇'
+            reply = f'<b>Cheapest Flight Found!</b>\n\n📍 <b>Fly From:</b> {result[3].capitalize()} To {result[2].capitalize()}\n\n❗<b>Flight Type:</b> {context.user_data["flight_type"]}\n\n💵 <b>Cheapest Price:</b> R{result[0]}\n\nClick on the link below to view the exact dates, airports, and duration of travel. 👇'
             link = flight_result_menu(link=result[1])
             # Save link and price to temp data to access for other functions
             context.user_data['link'] = result[1]
