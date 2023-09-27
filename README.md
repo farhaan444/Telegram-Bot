@@ -48,9 +48,7 @@ You can also save the flight result for the bot to track the flight price and th
    | `BOT_TOKEN`       | Your Telegram Bot Token                                  | None                   |
    | `KIWI_API_KEY`    | Your KIWI API key                                        | None                   |
    | `DATABASE_PATH`   | Your database file path                                  | `database\database.db` |
-   | `ADMINISTRATOR`   | Specify a Admin user role                                | `ADMIN`                |
-   | `MODERATOR`       | Specify a Moderator user role                            | `MODERATOR`            |
-   | `REGULAR_USER`    | Specify a regular user role                              | `REGULAR_USER`         |
+   | `ADMINISTRATOR`   | Holds a list of telegram chat id's for admin rights      | []                     |
    | `FIRST_RUN_FS`    | Flight Search Job Schedule first run                     | `10800`                |
    | `JOB_INTERVAL_FS` | Flight search job schedule intervals                     | `10800`                |
    | `FT_LIMIT`        | Set limit on flight alerts - 0 = Unlimited Flight alerts | `0`                    |

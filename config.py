@@ -14,9 +14,8 @@ KIWI_API_KEY: str = os.getenv('KIWI_API_KEY')
 DATABASE_PATH: str = os.getenv('DATABASE_PATH')
 
 # USER TYPES
-ADMINISTRATOR: str = os.getenv('ADMINISTRATOR')
-MODERATOR: str = os.getenv('MODERATOR')
-REGULAR_USER: str = os.getenv('REGULAR_USER')
+ADMINISTRATOR: list = os.getenv('ADMINISTRATOR')
+
 
 # JOB SCHEDULING INTERVALS - SECONDS
 FIRST_RUN_FS = int(os.getenv('FIRST_RUN_FS'))

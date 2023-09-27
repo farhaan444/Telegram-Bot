@@ -88,9 +88,8 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 db.close()
                 await callback.edit_message_reply_markup(reply_markup=menu)
             else:
-                user_role = config.REGULAR_USER
                 db.add_user(chat_id=chat_id, username=username,
-                            first_name=first_name, last_name=last_name, role=user_role)
+                            first_name=first_name, last_name=last_name)
                 db.add_flight_data(chat_id=chat_id, fly_from=Departure_Airport, fly_to=Destination_Airport, date_from=Departure_Date_Earliest, date_to=Departure_Date_Latest,
                                    nights_from=Minimum_Lenth_Of_Stay, nights_to=Maximum_Lenth_Of_Stay, adults=How_Many_Adults, curr=currency, flight_type=flight_type, current_price=price)
                 db.close()
