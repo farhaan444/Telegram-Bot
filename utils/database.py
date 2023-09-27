@@ -26,8 +26,7 @@ class DB:
                             chat_id INTEGER PRIMARY KEY NOT NULL UNIQUE,
                             username TEXT,
                             first_name TEXT,
-                            last_name TEXT,
-                            role TEXT NOT NULL  
+                            last_name TEXT 
         )
         """)
         # flight_data Table -- ! ON DELETE ACTION on foreign key.
@@ -49,11 +48,11 @@ class DB:
         """)
         self.connection.commit()
 
-    def add_user(self, chat_id, username, first_name, last_name, role):
+    def add_user(self, chat_id, username, first_name, last_name):
         """This method adds a user into the users table"""
 
-        self.cursor.execute('INSERT INTO users (chat_id, username, first_name, last_name, role) VALUES (?,?,?,?,?)',
-                            (chat_id, username, first_name, last_name, role,))
+        self.cursor.execute('INSERT INTO users (chat_id, username, first_name, last_name) VALUES (?,?,?,?)',
+                            (chat_id, username, first_name, last_name,))
         self.commit()
 
     def del_user(self, chat_id):
