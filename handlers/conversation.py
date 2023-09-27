@@ -35,7 +35,7 @@ async def converstaion(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwa
                                 await context.bot.send_message(chat_id=chat_id, text='🤖 Today is not my day! I am having connection issues, please try again later.')
                                 break
                             elif airports_list == None:
-                                await context.bot.send_message(chat_id=chat_id, text='😕 I cannot find any airport with that city you provided. Please, try again.')
+                                await context.bot.send_message(chat_id=chat_id, text='😕 I cannot find any airports in the city you provided. Please try again.')
                                 break
                             else:
                                 airports_list = airport_menu(
@@ -56,7 +56,7 @@ async def converstaion(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwa
                                 await context.bot.send_message(chat_id=chat_id, text='🤖 Today is not my day! I am having connection issues, please try again later.')
                                 break
                             elif airports_list == None:
-                                await context.bot.send_message(chat_id=chat_id, text='😕 I cannot find any airport with that city you provided. Please, try again.')
+                                await context.bot.send_message(chat_id=chat_id, text='😕 I cannot find any airports in the city you provided. Please try again.')
                                 break
                             else:
                                 airports_list = airport_menu(
@@ -81,7 +81,7 @@ async def converstaion(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwa
                             await context.bot.send_message(chat_id=chat_id, text=error_msg)
                             break
                         elif is_date_in_past(text) is False:
-                            error_msg = '🤨 You Honestly expect me to search with date that is in the past tense? Please enter a present or future date'
+                            error_msg = '🤨 You honestly expect me to search with a date that is in the past tense? Please enter a present or future date.'
                             await context.bot.send_message(chat_id=chat_id, text=error_msg)
                             break
                         else:
