@@ -1,3 +1,6 @@
+# BETA - remove if github action processes successfuly
+# Test Run the bot to start up with no exceptions.
+
 name: Telegram Bot Test
 
 on:
@@ -38,3 +41,8 @@ jobs:
 
       - name: Test Bot Code
         run: python ./bot.py
+
+      - name: Stop Polling Bot
+        run: |
+          python -m telegram.ext.updater.stop()
+        if: success()
