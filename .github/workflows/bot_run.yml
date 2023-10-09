@@ -40,9 +40,6 @@ jobs:
           pip install -r ./requirements.txt
 
       - name: Test Bot Code
-        run: python ./bot.py
-
-      - name: Stop Polling Bot
         run: |
+          python ./bot.py
           python -m telegram.ext.updater.stop()
-        if: success()
