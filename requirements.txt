@@ -1,3 +1,4 @@
 python-dotenv==1.0.0
 python-telegram-bot==20.6
+python-telegram-bot[job-queue]
 Requests==2.31.0
