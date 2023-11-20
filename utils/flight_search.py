@@ -176,9 +176,15 @@ async def next_step(update, context):
         elif result == None:
             await context.bot.send_message(chat_id=chat_id, text='🤖 Sorry, no flights found at this moment. Try again later.')
         else:
-            reply = f'<b>Cheapest Flight Found!</b>\n\n📍 <b>Fly From:</b> {result[3].capitalize()} To {result[2].capitalize()}\n\n❗<b>Flight Type:</b> {context.user_data["flight_type"]}\n\n💵 <b>Cheapest Price:</b> R{result[0]}\n\nClick on the link below to view the exact dates, airports, and duration of travel. 👇'
+            reply = f'<b>Cheapest Flight Found!</b>\n\n📍 <b>Fly From:</b> {result[3].capitalize()} To {result[2].capitalize()}\n\n❗<b>Flight Type:</b> {context.user_data["flight_type"]}\n\n💵 <b>Cheapest Price:</b> R{result[0]}\n\nTravel dates and airports may have changed! Click on the link below to view the exact dates, airports, and duration of travel. 👇'
             link = flight_result_menu(link=result[1])
             # Save link and price to temp data to access for other functions
             context.user_data['link'] = result[1]
             context.user_data['price'] = result[0]
             await context.bot.send_message(chat_id=chat_id, text=reply, reply_markup=link, parse_mode=ParseMode.HTML)
+
+
+def calc_percentage(old_p, new_p):
+    """This function takes two arguments old_p == old price and new_p == new price. This will calculate the percentage in the price drop"""
+    percentage = round(((old_p - new_p) / old_p) * 100)
+    return percentage
