@@ -80,3 +80,9 @@ class DB:
         self.cursor.execute(
             'DELETE FROM flight_data WHERE chat_id = ?', (chat_id,))
         self.commit()
+
+    def update_flight_data(self, id, price, data):
+        """This method will update data in the flight data table"""
+        query = f'UPDATE flight_data SET {data} = ? WHERE id = ?'
+        self.cursor.execute(query, (price, id,))
+        self.commit()
