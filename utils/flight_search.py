@@ -186,5 +186,8 @@ async def next_step(update, context):
 
 def calc_percentage(old_p, new_p):
     """This function takes two arguments old_p == old price and new_p == new price. This will calculate the percentage in the price drop"""
-    percentage = round(((old_p - new_p) / old_p) * 100)
-    return percentage
+    percentage = ((old_p - new_p) / old_p) * 100
+    if percentage < 1:
+        return percentage
+    else:
+        return round(percentage)
