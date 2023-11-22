@@ -6,7 +6,7 @@ from telegram.warnings import PTBDeprecationWarning
 from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, MessageHandler, filters
 from utils.jobs import flight_search_job
 
-# COMMAND IMPORTS
+# HANDLER IMPORTS
 from handlers.start import start
 from handlers.button import button
 from handlers.conversation import converstaion
@@ -14,6 +14,7 @@ from handlers.unknown import unknown_commands
 from handlers.flight_alerts import flight_alerts
 from handlers.del_flight_alert import del_flight_alert
 from handlers.flight_search_reset import flight_search_reset
+from handlers.error import errors
 
 
 class TelegramBot:
@@ -50,6 +51,9 @@ class TelegramBot:
             callback=unknown_commands, filters=filters.COMMAND))
         self.app.add_handler(MessageHandler(
             callback=converstaion, filters=filters.TEXT))
+
+        # ERROR HANDLERS
+        self.app.add_error_handler(callback=errors)
 
         # JOBS
         self.job_queue = self.app.job_queue
