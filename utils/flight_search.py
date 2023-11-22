@@ -188,6 +188,6 @@ def calc_percentage(old_p, new_p):
     """This function takes two arguments old_p == old price and new_p == new price. This will calculate the percentage in the price drop"""
     percentage = ((old_p - new_p) / old_p) * 100
     if percentage < 1:
-        return percentage
+        return round(percentage, 2)
     else:
         return round(percentage)
