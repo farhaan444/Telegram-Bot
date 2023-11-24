@@ -1,3 +1,6 @@
+# BETA TESTING ON APP BUILD
+# TESTING CONCURRENT UPDATES
+
 import logging
 import tracemalloc
 import warnings
@@ -31,8 +34,9 @@ class TelegramBot:
         # set this to only recieve errors/execptions --> comment/uncomment.
         self.log = logging.getLogger('httpx').setLevel(logging.WARNING)
 
-        # APP BUILD
-        self.app = ApplicationBuilder().token(token=self.token).build()
+        # APP BUILD - # TEST CONCURRENT UPDATES (REMOVE IF NEEDED.)
+        self.app = ApplicationBuilder().token(
+            token=self.token).concurrent_updates(True).build()
 
         # COMMAND HANDLERS
         self.app.add_handler(CommandHandler(command='start', callback=start))
