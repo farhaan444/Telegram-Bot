@@ -34,7 +34,7 @@ async def flight_search_job(context: ContextTypes.DEFAULT_TYPE):
                     'currency': i[9],
                     'flight_type': i[10],
                 }
-                result = search_flights(user_data=user_flight_data)
+                result = await search_flights(user_data=user_flight_data)
                 if result == None or result == False:
                     continue
                 else:

@@ -4,7 +4,7 @@ from datetime import datetime
 from telegram.constants import ParseMode
 
 # KEY BOARD IMPORTS
-from utils.keyboards import adults_menu, flight_result_menu
+from utils.keyboards import adults_menu, flight_result_menu, main_menu_redirect
 
 
 def get_airports(location):
@@ -86,7 +86,7 @@ def is_int_0(number):
         return False
 
 
-def search_flights(user_data):
+async def search_flights(user_data):
     """This function takes in a dict arg of all user data need to call api to search for flights.
     The function will also search and get the cheapest price. 
     Returns a list: price, destination and departure"""
@@ -137,7 +137,7 @@ def search_flights(user_data):
                     destination = data['data'][i]['cityTo']
                     departure = data['data'][i]['cityFrom']
                 result = [min_price, link, destination, departure]
-        except IndexError:
+        except (IndexError, ValueError):
             return None
         else:
             return result
@@ -170,11 +170,11 @@ async def next_step(update, context):
     # This checks if all data has been fullfilled and iniates flight search and send out result
     if context.user_data['How Many Adults'] != None:
         await context.bot.send_message(chat_id=chat_id, text='🤖 Okay, give me a sec. Searching for flights... 🔎')
-        result = search_flights(user_data=context.user_data)
+        result = await search_flights(user_data=context.user_data)
         if result == False:
-            await context.bot.send_message(chat_id=chat_id, text='🤖 looks like something went wrong, sorry. Please try again later.')
+            await context.bot.send_message(chat_id=chat_id, text='🤖 looks like something went wrong, sorry. Please try again later.', reply_markup=main_menu_redirect)
         elif result == None:
-            await context.bot.send_message(chat_id=chat_id, text='🤖 Sorry, no flights found at this moment. Try again later.')
+            await context.bot.send_message(chat_id=chat_id, text='🤖 Sorry, no flights found at this moment. Try again later.', reply_markup=main_menu_redirect)
         else:
             reply = f'<b>Cheapest Flight Found!</b>\n\n📍 <b>Fly From:</b> {result[3].capitalize()} To {result[2].capitalize()}\n\n❗<b>Flight Type:</b> {context.user_data["flight_type"]}\n\n💵 <b>Cheapest Price:</b> R{result[0]}\n\nTravel dates and airports may have changed! Click on the link below to view the exact dates, airports, and duration of travel. 👇'
             link = flight_result_menu(link=result[1])
