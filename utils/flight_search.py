@@ -136,7 +136,7 @@ async def search_flights(user_data):
                     link = data['data'][i]['deep_link']
                     destination = data['data'][i]['cityTo']
                     departure = data['data'][i]['cityFrom']
-                result = [min_price, link, destination, departure]
+                result = [min_price, link, destination, departure, data_len]
         except (IndexError, ValueError):
             return None
         else:
@@ -176,7 +176,7 @@ async def next_step(update, context):
         elif result == None:
             await context.bot.send_message(chat_id=chat_id, text='🤖 Sorry, no flights found at this moment. Try again later.', reply_markup=main_menu_redirect)
         else:
-            reply = f'<b>Cheapest Flight Found!</b>\n\n📍 <b>Fly From:</b> {result[3].capitalize()} To {result[2].capitalize()}\n\n❗<b>Flight Type:</b> {context.user_data["flight_type"]}\n\n💵 <b>Cheapest Price:</b> R{result[0]}\n\nTravel dates and airports may have changed! Click on the link below to view the exact dates, airports, and duration of travel. 👇'
+            reply = f'<b>Cheapest Flight Found!</b>\n\n🔎 Searched through {result[4]} flight results.\n\n📍 <b>Fly From:</b> {result[3].capitalize()} To {result[2].capitalize()}\n\n❗<b>Flight Type:</b> {context.user_data["flight_type"]}\n\n💵 <b>Cheapest Price:</b> R{result[0]}\n\nTravel dates and airports may have changed! Click on the link below to view the exact dates, airports, and duration of travel. 👇'
             link = flight_result_menu(link=result[1])
             # Save link and price to temp data to access for other functions
             context.user_data['link'] = result[1]
