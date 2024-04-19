@@ -30,7 +30,7 @@ async def converstaion(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwa
                 if value == None:
                     if key == 'Departure Airport':
                         if ':' not in text:
-                            airports_list = get_airports(location=text)
+                            airports_list = await get_airports(location=text)
                             if airports_list == 'Connection Error':
                                 await context.bot.send_message(chat_id=chat_id, text='🤖 Today is not my day! I am having connection issues, please try again later.')
                                 break
@@ -51,7 +51,7 @@ async def converstaion(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwa
 
                     if key == 'Destination Airport':
                         if ':' not in text:
-                            airports_list = get_airports(location=text)
+                            airports_list = await get_airports(location=text)
                             if airports_list == 'Connection Error':
                                 await context.bot.send_message(chat_id=chat_id, text='🤖 Today is not my day! I am having connection issues, please try again later.')
                                 break

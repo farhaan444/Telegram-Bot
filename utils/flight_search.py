@@ -1,13 +1,13 @@
-import requests
 import config
 from datetime import datetime
 from telegram.constants import ParseMode
+import aiohttp
 
 # KEY BOARD IMPORTS
 from utils.keyboards import adults_menu, flight_result_menu, main_menu_redirect
 
 
-def get_airports(location):
+async def get_airports(location):
     """This function calls the location kiwi api and returns airport name and iata code"""
 
     header = {'apikey': config.KIWI_API_KEY}
@@ -17,14 +17,14 @@ def get_airports(location):
         'location_types': 'airport'
     }
     try:
-        response = requests.get(
-            url=endpoint, params=params, headers=header)
-        response.raise_for_status()
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url=endpoint, params=params, headers=header) as response:
+                response.raise_for_status()
+                data = await response.json()
     except Exception as error:
         print(error)
         return 'Connection Error'
     else:
-        data = response.json()
         results = data['results_retrieved']
         try:
             if results == 0:
@@ -117,14 +117,14 @@ async def search_flights(user_data):
         }
 
     try:
-        response = requests.get(
-            url=endpoint, headers=header, params=params)
-        response.raise_for_status()
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url=endpoint, params=params, headers=header) as response:
+                response.raise_for_status()
+                data = await response.json()
     except Exception as error:
         print(error)
         return False
     else:
-        data = response.json()
         price_list = []
         data_len = len(data['data'])
         try:
