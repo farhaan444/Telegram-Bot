@@ -1,7 +1,6 @@
-# BETA - remove if github action processes successfuly
 # Test Run the bot to start up with no exceptions.
 
-name: Telegram Bot Test
+name: Telegram Run Bot Test
 
 on:
   pull_request:
@@ -39,7 +38,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r ./requirements.txt
 
-      - name: Test Bot Code
+      - name: Run Bot Test
         run: |
-          python ./bot.py
-          python -m telegram.ext.updater.stop()
+          python ./bot.py > output.log 2>&1 &
+          bot_pid=$!
+          sleep 10
+          kill $bot_pid
+          if grep -q "telegram.ext.Application - INFO - Application started" output.log; then
+            echo "Bot started successfully with no errors."
+            exit 0
+          elif grep -q "WARNING\|ERROR\|EXCEPTION" output.log; then
+            echo "Errors or warnings found in Bot logs."
+            exit 1
+          else
+            echo "No relevant messages found in logs."
+            exit 1
+          fi

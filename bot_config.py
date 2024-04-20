@@ -1,5 +1,3 @@
-# BETA TESTING ON APP BUILD
-
 import logging
 import tracemalloc
 import warnings
@@ -64,9 +62,4 @@ class TelegramBot:
             callback=flight_search_job, interval=config.JOB_INTERVAL_FS, first=config.FIRST_RUN_FS)
 
         # RUN BUILD
-        self.check_memory()
         self.app.run_polling(timeout=60)
-
-    def check_memory(self):
-        """Telegram bot documentation requires to check for memory issues/leaks in the bot."""
-        tracemalloc.start()
