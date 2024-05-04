@@ -15,7 +15,7 @@ async def del_flight_alert(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """This function will delete the a flight data alert from the database.
     It uses the context.args to get the flight_data id from the command send to the user."""
     flight_alert_id = int(update.message.text.split('ID_')[1].strip())
-    db = DB(file=config.DATABASE_PATH)
+    db = DB()
 
     try:
         flight_alert = db.cursor.execute(

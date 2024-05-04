@@ -26,7 +26,7 @@ def verify_user_on_del_alert(func):
     async def wrapped(update, context, *args, **kwargs):
         chat_id = update.effective_chat.id
         flight_alert_id = int(update.message.text.split('ID_')[1].strip())
-        db = DB(file=config.DATABASE_PATH)
+        db = DB()
         db_chat_id = db.cursor.execute(
             'SELECT chat_id FROM flight_data WHERE id = ?', (flight_alert_id,)).fetchone()
         db.close()
@@ -49,12 +49,12 @@ def check_save_alert_limit(func):
         await callback.answer()
         callback_data = callback.data
         chat_id = update.effective_chat.id
+        db = DB()
 
         if callback_data != "track_flight":
             return await func(update, context, *args, **kwargs)
         elif callback_data == 'track_flight':
             if config.FT_LIMIT != 0:
-                db = DB(file=config.DATABASE_PATH)
                 flight_data = db.cursor.execute(
                     'SELECT * FROM flight_data WHERE chat_id = ?', (chat_id,)).fetchall()
                 alerts = len(flight_data)
