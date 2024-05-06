@@ -27,7 +27,7 @@ async def get_airports(location):
                 response.raise_for_status()
                 data = await response.json()
     except Exception as error:
-        print(error)
+        logger.error(msg="Get Airports Error", exc_info=error)
         return 'Connection Error'
     else:
         results = data['results_retrieved']
