@@ -4,18 +4,17 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # BOT CREDENTIALS PROVIDED BY BOT FATHER
-BOT_USERNAME: str = os.getenv('BOT_USERNAME')
 BOT_TOKEN: str = os.getenv('BOT_TOKEN')
 
 # KIWI CREDENTIALS  FLIGHT API
-KIWI_API_KEY: str = os.getenv('KIWI_API_KEY')
+KIWI_API_KEY_STD: str = os.getenv('KIWI_API_KEY_STD')
+KIWI_API_KEY_MULTICITY: str = os.getenv('KIWI_API_KEY_MULTICITY')
 
 # DATABASE FILES
 DATABASE_PATH: str = os.getenv('DATABASE_PATH')
 
 # USER TYPES
 ADMINISTRATOR: list = os.getenv('ADMINISTRATOR')
-
 
 # JOB SCHEDULING INTERVALS - SECONDS
 FIRST_RUN_FS = int(os.getenv('FIRST_RUN_FS'))

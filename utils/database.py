@@ -1,13 +1,12 @@
 import sqlite3
+import config
 
 
 class DB:
-    """This class connnects to the databse file and creates a database instance.
-    This class will take one argument: file 
-    The file is the path to the database file."""
+    """This class connnects to the databse file and creates a database instance."""
 
-    def __init__(self, file) -> None:
-        self.connection = sqlite3.connect(file)
+    def __init__(self) -> None:
+        self.connection = sqlite3.connect(config.DATABASE_PATH)
         self.connection.execute("PRAGMA foreign_keys = 1")
         self.cursor = self.connection.cursor()
         self.create_table()
@@ -43,6 +42,7 @@ class DB:
                             curr TEXT,
                             flight_type TEXT,
                             current_price INTEGER,
+                            multi_city_req TEXT,
                             FOREIGN KEY (chat_id) REFERENCES users(chat_id) ON DELETE CASCADE
         )
         """)
@@ -61,11 +61,11 @@ class DB:
         self.cursor.execute('DELETE FROM users WHERE chat_id =?', (chat_id,))
         self.commit()
 
-    def add_flight_data(self, chat_id, fly_from, fly_to, date_from, date_to, nights_from, nights_to, adults, curr, flight_type, current_price):
+    def add_flight_data(self, chat_id, fly_from, fly_to, date_from, date_to, nights_from, nights_to, adults, curr, flight_type, current_price, multi_city_req=None):
         """This method adds all the flight data into the flight_data table"""
 
-        self.cursor.execute('INSERT INTO flight_data (chat_id, fly_from, fly_to, date_from, date_to, nights_in_dst_from, nights_in_dst_to, adults, curr, flight_type, current_price) VALUES (?,?,?,?,?,?,?,?,?,?,?)',
-                            (chat_id, fly_from, fly_to, date_from, date_to, nights_from, nights_to, adults, curr, flight_type, current_price,))
+        self.cursor.execute('INSERT INTO flight_data (chat_id, fly_from, fly_to, date_from, date_to, nights_in_dst_from, nights_in_dst_to, adults, curr, flight_type, current_price, multi_city_req) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
+                            (chat_id, fly_from, fly_to, date_from, date_to, nights_from, nights_to, adults, curr, flight_type, current_price, multi_city_req,))
         self.commit()
 
     def del_flight_data(self, id):

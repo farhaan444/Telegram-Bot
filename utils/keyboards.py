@@ -12,15 +12,20 @@ main_menu = [[InlineKeyboardButton(
 main_menu = InlineKeyboardMarkup(main_menu)
 
 # flght route menu
-# One way or Return (no support for multicity)
+# One way, Return or multicity
 flight_type_menu = [[InlineKeyboardButton(
-    '➡️ One Way', callback_data='oneway'), InlineKeyboardButton('↩️ Return', callback_data='return')]]
+    '➡️ One Way', callback_data='oneway'), InlineKeyboardButton('↩️ Return', callback_data='return')], [InlineKeyboardButton('🔄️ Multi-City', callback_data='multi-city')]]
 flight_type_menu = InlineKeyboardMarkup(flight_type_menu)
 
 # Single Button - Redidirect to start Main Menu
 main_menu_redirect = [[InlineKeyboardButton(
     '≡ Menu', callback_data='main_menu')]]
 main_menu_redirect = InlineKeyboardMarkup(main_menu_redirect)
+
+# Multi-City Menu
+multicity_menu = [[InlineKeyboardButton(
+    '➕ Add Flight', callback_data='add_flight'), InlineKeyboardButton('🔎 Get Result', callback_data='multicity_result')]]
+multicity_menu = InlineKeyboardMarkup(multicity_menu)
 
 
 def delete_all_menu(success=False):
