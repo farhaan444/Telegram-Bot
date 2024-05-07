@@ -3,7 +3,6 @@
 
 from telegram import Update
 from telegram.ext import ContextTypes
-import config
 from utils.flight_search import next_step
 from utils.decorators import check_save_alert_limit
 from utils.database import DB
@@ -152,16 +151,25 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await callback.edit_message_text(text='You have no flight alerts yet. Start a flight search and create a new flight alert.', reply_markup=menu)
         case 'add_flight':
             # This will add flights to the flight list in the multi-city search
-            if len(context.user_data['requests']) < 8:
-                context.user_data['Departure Airport'] = None
-                context.user_data['Destination Airport'] = None
-                context.user_data['date_from'] = None
-                await next_step(update=update, context=context)
-            else:
-                menu = [[InlineKeyboardButton(
-                    '🔎 Get result', callback_data='multicity_result')]]
-                menu = InlineKeyboardMarkup(menu)
-                await context.bot.send_message(chat_id=chat_id, text='❗You cannot add anymore flights.', reply_markup=menu)
+            try:
+                if len(context.user_data['requests']) < 8:
+                    context.user_data['Departure Airport'] = None
+                    context.user_data['Destination Airport'] = None
+                    context.user_data['date_from'] = None
+                    await next_step(update=update, context=context)
+                else:
+                    menu = [[InlineKeyboardButton(
+                        '🔎 Get result', callback_data='multicity_result')]]
+                    menu = InlineKeyboardMarkup(menu)
+                    await context.bot.send_message(chat_id=chat_id, text='❗You cannot add anymore flights.', reply_markup=menu)
+            except KeyError:
+                # Exception is raised if flight search was reset
+                await context.bot.send_message(chat_id=chat_id, text="🤖 Your flight search has been reset. Please select option 👇", reply_markup=flight_type_menu)
         case 'multicity_result':
             # This will call function to get and send out multi-city result
-            await next_step(update=update, context=context, MT_result=True)
+            try:
+                _ = context.user_data['flight_type']
+                await next_step(update=update, context=context, MT_result=True)
+            except KeyError:
+                # Exception is thrown if flight search was reset
+                await context.bot.send_message(chat_id=chat_id, text="🤖 Your flight search has been reset. Please select option 👇", reply_markup=flight_type_menu)

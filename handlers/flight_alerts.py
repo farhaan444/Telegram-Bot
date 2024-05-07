@@ -22,7 +22,7 @@ async def flight_alerts(update: Update, context: ContextTypes.DEFAULT_TYPE):
     db.close()
 
     if alert_data == []:
-        await context.bot.send_message(chat_id=chat_id, text='You have no flight alerts yet. Start a flight search and create a new flight alert.', reply_markup=main_menu_redirect)
+        await context.bot.send_message(chat_id=chat_id, text='🤖 You currently have no flight alerts. To create a new flight alert, begin a flight search.', reply_markup=main_menu_redirect)
     else:
         alerts = []
         for i in alert_data:

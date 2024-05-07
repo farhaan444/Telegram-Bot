@@ -3,7 +3,7 @@ from utils.database import DB
 import config
 
 # KEY BOARD IMPORTS
-from utils.keyboards import single_button
+from utils.keyboards import single_button, main_menu_redirect
 
 
 def send_action(action):
@@ -36,7 +36,7 @@ def verify_user_on_del_alert(func):
         elif db_chat_id[0] == chat_id:
             return await func(update, context, *args, **kwargs)
         else:
-            await context.bot.send_message(chat_id=update.effective_chat.id, text='❗Sorry, you are not allowed to do this!')
+            await context.bot.send_message(chat_id=update.effective_chat.id, text='❗Sorry, you are not allowed to do this!', reply_markup=main_menu_redirect)
             return
     return wrapped
 
@@ -64,7 +64,7 @@ def check_save_alert_limit(func):
                 else:
                     button = single_button(
                         text='🔔 Manage flight alerts', callback_data='get_flight_alerts')
-                    return await context.bot.send_message(chat_id=chat_id, text=f'❗Only {config.FT_LIMIT} flight alerts allowed at this time.', reply_markup=button)
+                    return await context.bot.send_message(chat_id=chat_id, text=f'❗Only {config.FT_LIMIT} flight alerts are allowed to be tracked at this time.', reply_markup=button)
             else:
                 return await func(update, context, *args, **kwargs)
     return wrapped

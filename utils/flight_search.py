@@ -198,17 +198,17 @@ async def next_step(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwargs
         for key, value in context.user_data.items():
             if value == None:
                 if key == 'Departure Airport':
-                    return await context.bot.send_message(chat_id=chat_id, text='🛫 Provide your departure city.')
+                    return await context.bot.send_message(chat_id=chat_id, text='🛫 Provide your <b>departure</b> city.', parse_mode=ParseMode.HTML)
                 if key == 'Destination Airport':
-                    return await context.bot.send_message(chat_id=chat_id, text='🛬 Please provide your destination city.')
+                    return await context.bot.send_message(chat_id=chat_id, text='🛬 Please provide your <b>destination</b> city.', parse_mode=ParseMode.HTML)
                 if key == 'Departure Date (Earliest)':
-                    return await context.bot.send_message(chat_id=chat_id, text='📅 Please enter your earliest departure date. e.g Day/Month/Year')
+                    return await context.bot.send_message(chat_id=chat_id, text='📅 Please enter your <b>earliest</b> departure date. e.g Day/Month/Year', parse_mode=ParseMode.HTML)
                 if key == 'Departure Date (Latest)':
-                    return await context.bot.send_message(chat_id=chat_id, text='📅 Please enter your latest departure date. e.g Day/Month/Year')
+                    return await context.bot.send_message(chat_id=chat_id, text='📅 Please enter your <b>latest</b> departure date. e.g Day/Month/Year', parse_mode=ParseMode.HTML)
                 if key == 'Minimum Lenth Of Stay':
-                    return await context.bot.send_message(chat_id=chat_id, text='🏨 Please enter your minimum length of stay.')
+                    return await context.bot.send_message(chat_id=chat_id, text='🏨 Please enter your <b>minimum</b> length of stay.', parse_mode=ParseMode.HTML)
                 if key == 'Maximum Lenth Of Stay':
-                    return await context.bot.send_message(chat_id=chat_id, text='🏨 Please enter your maximum length of stay.')
+                    return await context.bot.send_message(chat_id=chat_id, text='🏨 Please enter your <b>maximum</b> length of stay.', parse_mode=ParseMode.HTML)
                 if key == 'How Many Adults':
                     possible_adults = adults_menu()
                     return await context.bot.send_message(chat_id=chat_id, text='👪 How many adults?', reply_markup=possible_adults)
@@ -216,9 +216,9 @@ async def next_step(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwargs
         for key, value in context.user_data.items():
             if value == None:
                 if key == 'Departure Airport':
-                    return await context.bot.send_message(chat_id=chat_id, text='🛫 Provide your departure city.')
+                    return await context.bot.send_message(chat_id=chat_id, text='🛫 Provide your <b>departure</b> city.', parse_mode=ParseMode.HTML)
                 if key == 'Destination Airport':
-                    return await context.bot.send_message(chat_id=chat_id, text='🛬 Please provide your destination city.')
+                    return await context.bot.send_message(chat_id=chat_id, text='🛬 Please provide your <b>destination</b> city.', parse_mode=ParseMode.HTML)
                 if key == 'date_from':
                     return await context.bot.send_message(chat_id=chat_id, text='📅 Please enter your departure date. e.g Day/Month/Year')
                 if key == 'How Many Adults':

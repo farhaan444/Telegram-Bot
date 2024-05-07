@@ -13,4 +13,4 @@ async def flight_search_reset(update: Update, context: ContextTypes.DEFAULT_TYPE
     context.user_data.clear()
     menu = single_button(text='🔎 New Flight Search',
                          callback_data='start_flight_search')
-    await context.bot.send_message(chat_id=chat_id, text='🤖 Okie Dokes, Your flight search has been cleared.', reply_markup=menu, parse_mode=ParseMode.HTML)
+    await context.bot.send_message(chat_id=chat_id, text='🤖 Alrighty, Your flight search has been reset.', reply_markup=menu, parse_mode=ParseMode.HTML)

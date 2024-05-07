@@ -81,7 +81,7 @@ async def converstaion(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwa
                             await context.bot.send_message(chat_id=chat_id, text=error_msg)
                             break
                         elif is_date_in_past(text) is False:
-                            error_msg = '🤨 You honestly expect me to search with a date that is in the past tense? Please enter a present or future date.'
+                            error_msg = '🤨 I cannot search with a date that is in the past tense? Please enter a present or future date.'
                             await context.bot.send_message(chat_id=chat_id, text=error_msg)
                             break
                         else:
@@ -92,7 +92,7 @@ async def converstaion(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwa
                     if key == 'Minimum Lenth Of Stay' or key == 'Maximum Lenth Of Stay' or key == 'How Many Adults':
                         validate_num = validate_number(number=text)
                         if validate_num is False:
-                            error_msg = '🫤 Seriously, its not hard. Try again and enter only a number, e.g 2'
+                            error_msg = '🫤 Sorry, I need a numerical value to proceed, e.g 2'
                             await context.bot.send_message(chat_id=chat_id, text=error_msg)
                             break
                         else:
@@ -102,7 +102,7 @@ async def converstaion(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwa
                                     await next_step(update=update, context=context)
                                     break
                                 else:
-                                    error_msg = '🤨 I cannot accept 0 as a input. I will ask again, how many adults?'
+                                    error_msg = '🤨 Apologies, I require at least one adult for the flight. Could you please enter the number of adults'
                                     await context.bot.send_message(chat_id=chat_id, text=error_msg)
                                     break
                             else:
@@ -111,7 +111,7 @@ async def converstaion(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwa
                                     await next_step(update=update, context=context)
                                     break
                                 else:
-                                    error_msg = '🤨 I cannot accept 0 as a input on a return flight.'
+                                    error_msg = '🤨 Oops! I require a minimum stay of at least one day. Please enter a value greater than 0 for the length of stay.'
                                     await context.bot.send_message(chat_id=chat_id, text=error_msg)
                                     break
         elif context.user_data['flight_type'] == "MULTI-CITY":
@@ -170,7 +170,7 @@ async def converstaion(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwa
                             await context.bot.send_message(chat_id=chat_id, text=error_msg)
                             break
                         elif is_date_in_past(text) is False:
-                            error_msg = '🤨 You honestly expect me to search with a date that is in the past tense? Please enter a present or future date.'
+                            error_msg = '🤨 I cannot search with a date that is in the past tense? Please enter a present or future date.'
                             await context.bot.send_message(chat_id=chat_id, text=error_msg)
                             break
                         else:
@@ -181,7 +181,7 @@ async def converstaion(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwa
                     if key == 'How Many Adults':
                         validate_num = validate_number(number=text)
                         if validate_num is False:
-                            error_msg = '🫤 Seriously, its not hard. Try again and enter only a number, e.g 2'
+                            error_msg = '🫤 Sorry, I need a numerical value to proceed, e.g 2'
                             await context.bot.send_message(chat_id=chat_id, text=error_msg)
                             break
                         else:
@@ -191,16 +191,7 @@ async def converstaion(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwa
                                     await next_step(update=update, context=context)
                                     break
                                 else:
-                                    error_msg = '🤨 I cannot accept 0 as a input. I will ask again, how many adults?'
-                                    await context.bot.send_message(chat_id=chat_id, text=error_msg)
-                                    break
-                            else:
-                                if is_int_0(number=text) == False:
-                                    context.user_data[key] = text
-                                    await next_step(update=update, context=context)
-                                    break
-                                else:
-                                    error_msg = '🤨 I cannot accept 0 as a input on a return flight.'
+                                    error_msg = '🤨 Apologies, I require at least one adult for the flight. Could you please enter the number of adults'
                                     await context.bot.send_message(chat_id=chat_id, text=error_msg)
                                     break
         else:

@@ -5,6 +5,10 @@ from telegram import Update
 from telegram.constants import ParseMode
 from telegram.ext import ContextTypes
 
+# KEY BOARD IMPORTS
+from utils.keyboards import main_menu_redirect
+
 
 async def unknown_commands(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(chat_id=update.effective_chat.id, text='🤖 Sorry, i do not understand this commmand.', parse_mode=ParseMode.HTML)
+
+    await context.bot.send_message(chat_id=update.effective_chat.id, text='🤖 Sorry, i do not understand this command.', reply_markup=main_menu_redirect, parse_mode=ParseMode.HTML)
