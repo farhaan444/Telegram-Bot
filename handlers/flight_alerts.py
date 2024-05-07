@@ -27,7 +27,7 @@ async def flight_alerts(update: Update, context: ContextTypes.DEFAULT_TYPE):
         alerts = []
         for i in alert_data:
             if i[10] == "ONEWAY" or i[10] == "RETURN":
-                alert = f'<b>Location</b>: {i[2]} - {i[3]}\n<b>Dates</b>: {i[4]} - {i[5]}\n<b>Adults</b>: {i[8]}\n<b>Flight Type</b>: {i[10]}\n<b>Price</b>: R{i[11]}\n<b>Delete flight alert</b>: /TAP_DELETE_ID_{i[0]}\n\n'
+                alert = f'📍 <b>Route</b>: {i[2]} - {i[3]}\n📅 <b>Dates</b>: {i[4]} - {i[5]}\n👪 <b>Adults</b>: {i[8]}\n❗<b>Flight Type</b>: {i[10]}\n💵 <b>Price</b>: R{i[11]}\n❌ <b>Delete flight alert</b>: /TAP_DELETE_ID_{i[0]}\n\n'
                 alerts.append(alert)
             elif i[10] == "MULTI-CITY":
                 multi_routes = json.loads(i[12])
@@ -36,7 +36,7 @@ async def flight_alerts(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     route = f"({j['fly_from']} - {j['fly_to']} - {j['date_from']})\n"
                     routes.append(route)
                 routes_formated = ''.join(routes)
-                alert = f'<b>Routes</b>:\n{routes_formated}<b>Adults</b>: {i[8]}\n<b>Flight Type</b>: {i[10]}\n<b>Price</b>: R{i[11]}\n<b>Delete flight alert</b>: /TAP_DELETE_ID_{i[0]}\n\n'
+                alert = f'📍 <b>Routes</b>:\n{routes_formated}👪 <b>Adults</b>: {i[8]}\n❗<b>Flight Type</b>: {i[10]}\n💵 <b>Price</b>: R{i[11]}\n❌ <b>Delete flight alert</b>: /TAP_DELETE_ID_{i[0]}\n\n'
                 alerts.append(alert)
         response = ''.join(alerts)
         menu = delete_all_menu()
