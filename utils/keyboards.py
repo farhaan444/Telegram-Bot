@@ -65,7 +65,7 @@ def flight_result_menu(link, tracked=False, err=False):
         row1 = [InlineKeyboardButton(
             '✈️ Book Your Flight ✈️', url=link, callback_data=None)]
         row2 = [InlineKeyboardButton(
-            '✅ Flight tracking created', callback_data='#')]
+            '✅ Flight tracking activated', callback_data='#')]
         row3 = [InlineKeyboardButton('🔎 New Flight Search', callback_data='start_flight_search'),
                 InlineKeyboardButton('≡ Menu', callback_data="main_menu")]
         button = [row1, row2, row3]

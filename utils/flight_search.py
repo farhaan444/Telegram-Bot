@@ -124,7 +124,7 @@ async def search_flights(user_data):
         header = {'apikey': config.KIWI_API_KEY_MULTICITY}
         endpoint = 'https://api.tequila.kiwi.com/v2/flights_multi'
         params = {
-            "requests": [{"fly_to": i['fly_to'], "fly_from": i["fly_from"], "date_to": i["date_from"], "date_from": i["date_from"], "adults": i['adults'], "curr": user_data['currency']} for i in user_data['requests']]
+            "requests": [{"fly_to": i['fly_to'], "fly_from": i["fly_from"], "date_to": i["date_from"], "date_from": i["date_from"], "adults": i['adults'], "curr": user_data['currency'], "limit": 1000} for i in user_data['requests']]
         }
 
     if user_data['flight_type'] == 'ONEWAY' or user_data['flight_type'] == 'RETURN':
@@ -234,7 +234,7 @@ async def next_step(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwargs
         elif result == None:
             await context.bot.send_message(chat_id=chat_id, text='🤖 Sorry, no flights found at this moment. Try again later.', reply_markup=main_menu_redirect)
         else:
-            reply = f'<b>Cheapest Flight Found!</b>\n\n🔎 Searched through {result[4]} flight results.\n\n📍 <b>Fly From:</b> {result[3].capitalize()} To {result[2].capitalize()}\n\n❗<b>Flight Type:</b> {context.user_data["flight_type"]}\n\n💵 <b>Cheapest Price:</b> R{result[0]}\n\nTravel dates and airports may have changed! Click on the link below to view the exact dates, airports, and duration of travel. 👇'
+            reply = f'<b>Cheapest Flight Found!</b>\n\n🔎 Searched through {result[4]} flight results.\n\n📍 <b>Route:</b>\n\n✈️ {result[3].capitalize()} ➡️ {result[2].capitalize()}\n\n❗<b>Flight Type:</b> {context.user_data["flight_type"]}\n\n💵 <b>Cheapest Price:</b> R{result[0]}\n\nTravel dates and airports may have changed! Click on the link below to view the exact dates, airports, and duration of travel. 👇'
             link = flight_result_menu(link=result[1])
             # Save link and price to temp data to access for other functions
             context.user_data['link'] = result[1]
