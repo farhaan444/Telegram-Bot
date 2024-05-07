@@ -1,6 +1,5 @@
 # MESSAGE HANDLER
 
-import config
 from telegram import Update
 from telegram.ext import ContextTypes
 from utils.database import DB
