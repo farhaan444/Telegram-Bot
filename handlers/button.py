@@ -11,6 +11,7 @@ import json
 
 # HANDLER IMPORTS
 from handlers.flight_alerts import flight_alerts
+from handlers.help import help
 
 # KEY BOARD IMPORTS
 from utils.keyboards import flight_type_menu, main_menu, flight_result_menu, delete_all_menu
@@ -173,3 +174,6 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
             except KeyError:
                 # Exception is thrown if flight search was reset
                 await context.bot.send_message(chat_id=chat_id, text="🤖 Your flight search has been reset. Please select option 👇", reply_markup=flight_type_menu)
+        case 'help':
+            # This will call the help command handler
+            await help(update=update, context=context)

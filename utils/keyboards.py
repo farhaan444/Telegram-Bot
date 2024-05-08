@@ -8,7 +8,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton,
 
 # Start menu
 main_menu = [[InlineKeyboardButton(
-    '🔎 Flight Search', callback_data='start_flight_search'), InlineKeyboardButton('🔔 Flight Alerts', callback_data='get_flight_alerts')]]
+    '🔎 Flight Search', callback_data='start_flight_search'), InlineKeyboardButton('🔔 Flight Alerts', callback_data='get_flight_alerts')], [InlineKeyboardButton('🆘 Help', callback_data='help')]]
 main_menu = InlineKeyboardMarkup(main_menu)
 
 # flght route menu
