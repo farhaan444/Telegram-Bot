@@ -1,0 +1,23 @@
+<b>Welcome to Flight Spotter Bot!</b>
+
+Flight Spotter Bot is your personal assistant for finding and tracking flight prices. Here's what you can do:
+
+<b>Search for Flights:</b>
+
+▪️ You can search for one-way, return, or multi-city flights to your desired destination.
+▪️ Flight Spotter Bot will sift through all available options and present you with the cheapest result.
+
+<b>Track Flight Prices:</b>
+
+▪️ Flight Spotter Bot can monitor flight prices for you.
+▪️ After searching for your desired flight route, click on <b>Track Price</b> and Flight Spotter Bot will keep an eye on the price.
+▪️ Flight Spotter Bot will notify you when the price drops, so you never miss a deal. 
+▪️ Flight Spotter Bot will also automatically save a price drop and monitor for any further price drops. 😉
+
+<b>Bot Commands:</b>
+
+/start - <i>Start your journey with Flight Spotter Bot.</i>
+/flight_alerts - <i>Get a list of all your saved flight alerts.</i>
+/reset - <i>If you made a mistake during your flight search, than just click the reset command and it will reset your flight search so you can start again.</i>
+/menu - <i>Need to go back to where it all started? This will send you the Main Menu.</i>
+

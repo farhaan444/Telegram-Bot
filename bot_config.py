@@ -12,6 +12,8 @@ from handlers.flight_alerts import flight_alerts
 from handlers.del_flight_alert import del_flight_alert
 from handlers.flight_search_reset import flight_search_reset
 from handlers.error import errors
+from handlers.main_menu import handler_main_menu
+from handlers.help import help
 
 
 class TelegramBot:
@@ -55,6 +57,9 @@ class TelegramBot:
             command='flight_alerts', callback=flight_alerts))
         self.app.add_handler(CommandHandler(
             command='reset', callback=flight_search_reset))
+        self.app.add_handler(CommandHandler(
+            command="menu", callback=handler_main_menu))
+        self.app.add_handler(CommandHandler(command="help", callback=help))
 
         # CALLBACK QUERY HANDLERS
         self.app.add_handler(CallbackQueryHandler(callback=button))
