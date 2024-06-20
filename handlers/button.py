@@ -14,7 +14,7 @@ from handlers.flight_alerts import flight_alerts
 from handlers.help import help
 
 # KEY BOARD IMPORTS
-from utils.keyboards import flight_type_menu, main_menu, flight_result_menu, delete_all_menu
+from utils.keyboards import flight_type_menu, main_menu, flight_result_menu, delete_all_menu, verify_del_menu
 
 
 @check_save_alert_limit
@@ -144,6 +144,14 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         case 'get_flight_alerts':
             # This gets list of all saved flight data that is been tracked and sends to user
             await flight_alerts(update, context)
+        case 'verify_del' | 'no_del':
+            # This sends a user a confirmation to delete all flight data. 
+            if callback.data == 'verify_del':
+                menu = verify_del_menu()
+                await context.bot.send_message(chat_id=chat_id, text='🤖 Are you sure you want delete all your flight data?', reply_markup=menu)
+            elif callback.data == 'no_del':
+                current_menu = callback
+                await current_menu.delete_message()
         case 'del_all_FA':
             # This deletes all tracked flight data from db
             db.del_all_flight_data(chat_id=chat_id)
