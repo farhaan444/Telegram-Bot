@@ -1,7 +1,10 @@
 import logging
-import config
 from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, MessageHandler, filters
 from utils.jobs import flight_search_job
+from utils.database import DB
+
+# Filters 
+from utils.filters import Admin_convo_filter
 
 # HANDLER IMPORTS
 from handlers.start import start
@@ -14,6 +17,7 @@ from handlers.flight_search_reset import flight_search_reset
 from handlers.error import errors
 from handlers.main_menu import handler_main_menu
 from handlers.help import help
+from handlers.admin import admin_dashboard, admin_convo
 
 
 class TelegramBot:
@@ -50,6 +54,9 @@ class TelegramBot:
         # APP BUILD
         self.app = ApplicationBuilder().token(
             token=self.token).concurrent_updates(True).build()
+        
+        # Init Custom Filters 
+        self.admin_convo_filter = Admin_convo_filter(chat_data=self.app.chat_data)
 
         # COMMAND HANDLERS
         self.app.add_handler(CommandHandler(command='start', callback=start))
@@ -60,6 +67,7 @@ class TelegramBot:
         self.app.add_handler(CommandHandler(
             command="menu", callback=handler_main_menu))
         self.app.add_handler(CommandHandler(command="help", callback=help))
+        self.app.add_handler(CommandHandler(command='admin', callback=admin_dashboard))
 
         # CALLBACK QUERY HANDLERS
         self.app.add_handler(CallbackQueryHandler(callback=button))
@@ -69,6 +77,7 @@ class TelegramBot:
             callback=del_flight_alert, filters=filters.Regex(r'TAP_DELETE_ID_')))
         self.app.add_handler(MessageHandler(
             callback=unknown_commands, filters=filters.COMMAND))
+        self.app.add_handler(MessageHandler(callback=admin_convo, filters=self.admin_convo_filter))
         self.app.add_handler(MessageHandler(
             callback=converstaion, filters=filters.TEXT))
 
@@ -78,7 +87,18 @@ class TelegramBot:
         # JOBS
         self.job_queue = self.app.job_queue
         self.job_3_hour = self.job_queue.run_repeating(
-            callback=flight_search_job, interval=config.JOB_INTERVAL_FS, first=config.FIRST_RUN_FS)
+            callback=flight_search_job, interval=self.load_global_settings()['FS_JOB_INTV'], first=900)
 
         # RUN BUILD
         self.app.run_polling(timeout=60)
+
+    
+    def load_global_settings(self):
+
+        db = DB()
+        settings = {}
+
+        settings['FS_JOB_INTV'] = db.cursor.execute('SELECT fs_job_interval FROM global_settings').fetchone()[0]
+
+        db.close()
+        return settings
