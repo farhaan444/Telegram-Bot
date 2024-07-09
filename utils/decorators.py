@@ -54,17 +54,28 @@ def check_save_alert_limit(func):
         if callback_data != "track_flight":
             return await func(update, context, *args, **kwargs)
         elif callback_data == 'track_flight':
-            if config.FT_LIMIT != 0:
+            ft_limit = db.cursor.execute('SELECT flight_alert_limit FROM global_settings').fetchone()[0]
+            if ft_limit != 0:
                 flight_data = db.cursor.execute(
                     'SELECT * FROM flight_data WHERE chat_id = ?', (chat_id,)).fetchall()
                 alerts = len(flight_data)
                 db.close()
-                if alerts < config.FT_LIMIT:
+                if alerts < ft_limit:
                     return await func(update, context, *args, **kwargs)
                 else:
                     button = single_button(
                         text='🔔 Manage flight alerts', callback_data='get_flight_alerts')
-                    return await context.bot.send_message(chat_id=chat_id, text=f'❗Only {config.FT_LIMIT} flight alerts are allowed to be tracked at this time.', reply_markup=button)
+                    return await context.bot.send_message(chat_id=chat_id, text=f'❗Only {file["FT_LIMIT"]} flights alert are allowed to be tracked at this time.', reply_markup=button)
             else:
                 return await func(update, context, *args, **kwargs)
+    return wrapped
+
+def admin_only(func):
+    @wraps(func)
+    async def wrapped(update, context, *args, **kwargs):
+        chat_id = update.effective_chat.id
+        if chat_id in config.ADMINISTRATORS:
+            return await func(update, context, *args, **kwargs)
+        else:
+            await context.bot.send_message(chat_id=update.effective_chat.id, text='❗Sorry, Access Denied!', reply_markup=main_menu_redirect)
     return wrapped

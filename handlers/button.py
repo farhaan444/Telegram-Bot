@@ -32,6 +32,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         case 'start_flight_search':
             # Start flight search
             context.user_data.clear()
+            context.chat_data.clear() #Clear chat data so that admin handler and conversation handler is not confused.
             context.user_data['Departure Airport'] = None
             context.user_data['Destination Airport'] = None
             context.user_data['Departure Date (Earliest)'] = None
@@ -147,8 +148,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         case 'verify_del' | 'no_del':
             # This sends a user a confirmation to delete all flight data. 
             if callback.data == 'verify_del':
-                menu = verify_del_menu()
-                await context.bot.send_message(chat_id=chat_id, text='🤖 Are you sure you want delete all your flight data?', reply_markup=menu)
+                await context.bot.send_message(chat_id=chat_id, text='🤖 Are you sure you want delete all your flight data?', reply_markup=verify_del_menu)
             elif callback.data == 'no_del':
                 current_menu = callback
                 await current_menu.delete_message()
@@ -185,3 +185,19 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         case 'help':
             # This will call the help command handler
             await help(update=update, context=context)
+        case 'admin-FTjob-set':
+            # This activates admin message handler and sends response for admin to set flight tracker job.
+            # user_data will be reset to avoid bot confusion when handling data in message handler.
+            context.user_data.clear()
+            context.chat_data['set'] = 'Set Flight Tracker Job'
+            reply = "🤖 Enter a number in seconds to set the Job run interval. e.g 900. Please note you cannot enter a value less than 900 seconds."
+            context.chat_data['status'] = "verified"
+            await context.bot.send_message(chat_id=chat_id, text=reply)
+        case 'admin-FTlimit-set':
+            # This activates admin message handler and sends response for admin to set flight alert limit.
+            # user_data will be reset to avoid bot confusion when handling data in message handler.
+            context.user_data.clear()
+            context.chat_data['set'] = 'Set Flight Alert Limit' 
+            reply = "🤖 Enter a number to set the flight alert limit. Set to 0 for unlimited flight alerts."
+            context.chat_data['status'] = "verified"
+            await context.bot.send_message(chat_id=chat_id, text=reply)

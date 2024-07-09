@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+import ast
 
 load_dotenv()
 
@@ -14,11 +15,5 @@ KIWI_API_KEY_MULTICITY: str = os.getenv('KIWI_API_KEY_MULTICITY')
 DATABASE_PATH: str = os.getenv('DATABASE_PATH')
 
 # USER TYPES
-ADMINISTRATORS: list = os.getenv('ADMINISTRATORS')
+ADMINISTRATORS: list = ast.literal_eval(os.getenv('ADMINISTRATORS'))
 
-# JOB SCHEDULING INTERVALS - SECONDS
-FIRST_RUN_FS = int(os.getenv('FIRST_RUN_FS'))
-JOB_INTERVAL_FS = int(os.getenv('JOB_INTERVAL_FS'))
-
-# FLIGHT TRACKING LIMITS - SET TO 0 FOR UNNLIMITED FLIGHT ALERTS
-FT_LIMIT = int(os.getenv('FT_LIMIT'))

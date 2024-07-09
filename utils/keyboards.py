@@ -29,6 +29,14 @@ multicity_menu = [[InlineKeyboardButton(
     '➕ Add Flight', callback_data='add_flight'), InlineKeyboardButton('🔎 Get Result', callback_data='multicity_result')]]
 multicity_menu = InlineKeyboardMarkup(multicity_menu)
 
+# verify/confirm delete all flight alert menu
+verify_del_menu = [[InlineKeyboardButton('Yes', callback_data='del_all_FA')], [InlineKeyboardButton('No', callback_data='no_del')]]
+verify_del_menu = InlineKeyboardMarkup(verify_del_menu)
+
+# Admin Menu
+admin_menu = [[InlineKeyboardButton("Set Run Interval", callback_data='admin-FTjob-set')],[InlineKeyboardButton('Set Flight Alert Limit', callback_data='admin-FTlimit-set')]]
+admin_menu = InlineKeyboardMarkup(admin_menu)
+
 def delete_all_menu(success=False):
     """This function takes one argument: Success:Bool
     The function will create a inline keyboard with two buttons
@@ -101,10 +109,6 @@ def flight_alert_menu(link):
     menu = InlineKeyboardMarkup(menu)
     return menu
 
-def verify_del_menu():
-    menu = [[InlineKeyboardButton('Yes', callback_data='del_all_FA')], [InlineKeyboardButton('No', callback_data='no_del')]]
-    menu = InlineKeyboardMarkup(menu)
-    return menu
 # REPLY KEYBOARDS
 
 def airport_menu(airports: list):

@@ -10,6 +10,7 @@ class DB:
         self.connection.execute("PRAGMA foreign_keys = 1")
         self.cursor = self.connection.cursor()
         self.create_table()
+        self.load_default_settings()
 
     def commit(self):
         self.connection.commit()
@@ -46,7 +47,21 @@ class DB:
                             FOREIGN KEY (chat_id) REFERENCES users(chat_id) ON DELETE CASCADE
         )
         """)
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS global_settings(
+                            id INTEGER PRIMARY KEY NOT NULL UNIQUE,
+                            flight_alert_limit INTEGER DEFAULT 0,
+                            fs_job_interval INTEGER DEFAULT 900
+                            )
+
+        """)
         self.connection.commit()
+
+    def load_default_settings(self):
+        check = self.cursor.execute("SELECT COUNT(*) FROM global_settings").fetchone()[0]
+        if check == 0:
+            self.cursor.execute('INSERT INTO global_settings (id) VALUES (1)')
+            self.commit()
+
 
     def add_user(self, chat_id, username, first_name, last_name):
         """This method adds a user into the users table"""
