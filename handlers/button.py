@@ -14,7 +14,7 @@ from handlers.flight_alerts import flight_alerts
 from handlers.help import help
 
 # KEY BOARD IMPORTS
-from utils.keyboards import flight_type_menu, main_menu, flight_result_menu, delete_all_menu, verify_del_menu
+from utils.keyboards import flight_type_menu, main_menu, flight_result_menu, delete_all_menu, verify_del_menu, multicity_menu
 
 
 @check_save_alert_limit
@@ -178,7 +178,10 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
             # This will call function to get and send out multi-city result
             try:
                 _ = context.user_data['flight_type']
-                await next_step(update=update, context=context, MT_result=True)
+                if len(context.user_data['requests']) > 1:
+                    await next_step(update=update, context=context, MT_result=True)
+                else:
+                    await context.bot.send_message(chat_id=chat_id, text='🤖 You need to add two or more flights to search for a multi-city flight, or try searching for a one-way or return flight.', reply_markup=multicity_menu)
             except KeyError:
                 # Exception is thrown if flight search was reset
                 await context.bot.send_message(chat_id=chat_id, text="🤖 Your flight search has been reset. Please select option 👇", reply_markup=flight_type_menu)
