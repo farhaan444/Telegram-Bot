@@ -14,6 +14,7 @@ async def errors(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Error handler that handles bot errors and prints out errors to console """
     logger.exception(context.error)
     curr_datetime = datetime.datetime.now()
-    reply = f"{curr_datetime} <b>A bot exception/error has occured. Please see logs.</b>"
+    error = context.error
+    reply = f"{curr_datetime}\nA bot exception/error has occured. Please see logs.\n<b>Error: {error.__doc__}</b>"
     for i in config.ADMINISTRATORS:
         await context.bot.send_message(chat_id=i, text=reply, parse_mode=ParseMode.HTML)
