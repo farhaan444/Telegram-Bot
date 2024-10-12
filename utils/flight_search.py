@@ -13,7 +13,14 @@ logger = logging.getLogger(__name__)
 
 
 async def get_airports(location):
-    """This function calls the location kiwi api and returns airport name and iata code"""
+    """
+    This function takes in a string arg of a location and returns a list of the available airports in that location.
+    The function will return None if no airports are found.
+    If an error occurs while making the API request, the function will return 'Connection Error'.
+    
+    :param location: str
+    :return: list or None
+    """
 
     header = {'apikey': config.KIWI_API_KEY_STD}
     endpoint = 'https://api.tequila.kiwi.com/locations/query'
@@ -46,9 +53,11 @@ async def get_airports(location):
 
 
 def format_date(date):
-    """This check if the user has inputed the date in the correct format. 
-    If not this function will try and format the date.
-    Date format Day/Month/Year. """
+    """
+    This function takes a date as a string and attempts to format it
+    according to the day/month/year format. If the date is not in this
+    format, the function will return None.
+    """
 
     if '/' in date:
         try:
@@ -63,7 +72,11 @@ def format_date(date):
 
 
 def is_date_in_past(date):
-    """This function will check date presence and return true if date is in the present or future and return false if it is in the past."""
+    """
+    This function takes a date as a string in the format day/month/year 
+    and returns True if the date is in the past or today, False otherwise.
+    """
+
     input_date = datetime.strptime(date, "%d/%m/%Y").date()
     today = datetime.today().date()
     if input_date > today:
@@ -75,7 +88,11 @@ def is_date_in_past(date):
 
 
 def validate_number(number):
-    """This function check if arg is a number and not a string number"""
+    """
+    This function takes a number as a string and returns True if it can be 
+    converted to an integer, False otherwise.
+    """
+
     try:
         int(number)
         return True
@@ -84,7 +101,10 @@ def validate_number(number):
 
 
 def is_int_0(number):
-    """This function check if the arg is == 0"""
+    """
+    This function takes a number as a string and returns True if the number is 0, False otherwise.
+    """
+
     if int(number) == 0:
         return True
     else:
@@ -92,9 +112,12 @@ def is_int_0(number):
 
 
 async def search_flights(user_data):
-    """This function takes in a dict arg of all user data need to call api to search for flights.
-    The function will also search and get the cheapest price. 
-    Returns a list: price, destination and departure"""
+    """
+    This function takes in a user's data and searches for flights according to the user's flight type.
+    The function will return None if no flights are found or if an error occurs.
+    If the user's flight type is 'ONEWAY' or 'RETURN', it will return a list containing the minimum price, link, destination, and departure. 
+    If the user's flight type is 'MULTI-CITY', it will return a list containing the minimum price, routes, link, and the number of routes found.
+    """
 
     header = {'apikey': config.KIWI_API_KEY_STD}
     endpoint = 'https://api.tequila.kiwi.com/v2/search'
@@ -188,10 +211,13 @@ async def search_flights(user_data):
                 return result
 
 
-async def next_step(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwargs):
-    """This Fuction iterates through the user data asks user for info if data is None
-    This function will also iniate the flight search and provide the result to the user.
+async def next_step(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwargs): 
     """
+    This function is responsible for handling the next step in the flight search process.
+    It checks if the user has provided all the necessary information and if so, it will
+    initiate the flight search process and send out the result.
+    """
+
     chat_id = update.effective_chat.id
 
     if context.user_data['flight_type'] == "ONEWAY" or context.user_data['flight_type'] == "RETURN":
@@ -282,7 +308,17 @@ async def next_step(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwargs
 
 
 def calc_percentage(old_p, new_p):
-    """This function takes two arguments old_p == old price and new_p == new price. This will calculate the percentage in the price drop"""
+    """
+    Calculate the percentage difference between two prices.
+
+    Args:
+        old_p (int): The old price.
+        new_p (int): The new price.
+
+    Returns:
+        float: The percentage difference between the two prices.
+    """
+    
     percentage = ((old_p - new_p) / old_p) * 100
     if percentage < 1:
         return round(percentage, 2)

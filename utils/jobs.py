@@ -13,9 +13,15 @@ from utils.keyboards import flight_alert_menu, main_menu_redirect
 
 
 async def flight_search_job(context: ContextTypes.DEFAULT_TYPE):
-    """This function will add flight data in a job que and will check if the resulting price is lower
-    than the current price. If true it will notify the user."""
-
+    """
+    This is a Telegram Bot Job Queue function.
+    It is invoked by the scheduler in main.py.
+    The function will check all the flight data in the database and check if the flight date is in the past.
+    If the flight date is in the past, the function will delete the flight data from the database.
+    If the flight date is not in the past, the function will search for flights using the data from the database and compare the price with the current price.
+    If the current price is lower than the price in the database, the function will update the price in the database and send a message to the user with the price drop percentage and the new price.
+    """
+    
     db = DB()
 
     flight_data = db.cursor.execute('SELECT * FROM flight_data').fetchall()

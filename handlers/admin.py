@@ -20,6 +20,14 @@ from utils.keyboards import admin_menu
 @admin_only
 async def admin_dashboard(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
+    """
+    This function is a Telegram Bot Command Handler.
+    It is invoked when the user types /admin_dashboard in a Telegram chat.
+    The function will return a message with various statistics about the bot to the user.
+    The message includes the total number of users, the total number of flight alerts, the first run interval for the flight tracker job, the run intervals for the flight tracker job, and the flight alert limit.
+    The message also includes a button to set the flight alert limit and a button to set the run intervals for the flight tracker job.
+    """
+    
     chat_id = update.effective_chat.id
 
     db = DB()
@@ -52,6 +60,15 @@ async def admin_dashboard(update: Update, context: ContextTypes.DEFAULT_TYPE):
 @send_action(action=ChatAction.TYPING)
 async def admin_convo(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
+    """
+    This function is a Telegram Bot Message Handler.
+    It is invoked when the user sends a message during an admin session.
+    The function will check what the user is trying to set, either the flight tracker job interval or the flight alert limit.
+    The function will then validate the input and update the relevant value in the database.
+    The function will then send a message to the user indicating if the update was successful or not.
+    The function will also clear the chat_data to indicate that the admin session has expired.
+    """
+    
     chat_id = update.effective_chat.id
     TEXT = update.message.text.strip()
     db = DB()

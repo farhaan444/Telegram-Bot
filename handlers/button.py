@@ -19,7 +19,11 @@ from utils.keyboards import flight_type_menu, main_menu, flight_result_menu, del
 
 @check_save_alert_limit
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """This function is a CALLBACKQUERY HANDLER. This function will handler any callback queries from any inline keyboard"""
+    """
+    This is a callback query handler that handles all inline keyboard button presses.
+    It will either delete the inline keyboard, send a response, or call another function based on the callback query data.
+    """
+    
     callback = update.callback_query
     await callback.answer()
     chat_id = update.effective_chat.id

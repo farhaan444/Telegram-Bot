@@ -21,6 +21,11 @@ from handlers.admin import admin_dashboard, admin_convo
 
 
 class TelegramBot:
+    """
+    This class is a Telegram Bot. It contains the entire logic required to run a Telegram Bot.
+    It includes the Telegram Bot token, command handlers, callback query handlers, message handlers, error handlers, and job queue.
+    """
+
     def __init__(self, token: str) -> None:
         # TELEGRAM BOT FATHER CREDENTIALS
         self.token = token
@@ -95,6 +100,13 @@ class TelegramBot:
     
     def load_global_settings(self):
 
+        """
+        This method loads the global settings from the database.
+        The global settings that are loaded are the flight search job interval.
+
+        Returns:
+            dict: A dictionary containing the global settings.
+        """
         db = DB()
         settings = {}
 
