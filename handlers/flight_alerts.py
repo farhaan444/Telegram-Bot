@@ -11,8 +11,15 @@ from utils.keyboards import main_menu_redirect, delete_all_menu
 
 
 async def flight_alerts(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """This function returns all the saved flight alerts that are been tracked in the database.
-    It will provide a link to delete each a flight alert."""
+    """
+    This function is a Telegram Bot Command Handler.
+    It is invoked when the user types /flight_alerts in a Telegram chat.
+    The function will return a message with all the flight alerts created by the user in the chat.
+    The message will include the route, dates, adults and price of each flight alert.
+    The message will also include a delete button for each flight alert.
+    If the user has no flight alerts, the function will return a message with a button to create a new flight alert.
+    """
+    
     chat_id = update.effective_chat.id
     db = DB()
 

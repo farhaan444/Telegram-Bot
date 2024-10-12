@@ -7,8 +7,15 @@ from utils.keyboards import single_button, main_menu_redirect
 
 
 def send_action(action):
-    """This decorator send a tryping chat action to the user when the bot is handling a request.
-    action = ChatAction Constant"""
+    """
+    Decorator that will send a ChatAction to the user before the function is called.
+    
+    Args:
+        action (str): The action to be sent. See https://core.telegram.org/bots/api#sendchataction
+    
+    Returns:
+        function: The decorated function.
+    """
 
     def wrapped(func):
         @wraps(func)
@@ -20,8 +27,13 @@ def send_action(action):
 
 
 def verify_user_on_del_alert(func):
-    """This decorator verifies if the actual user iniated the del_flight_command.
-    Imposters can type the link command and try to delete."""
+    """
+    Decorator that verifies if the user is allowed to delete a flight alert based on the chat_id.
+    
+    The function checks if the chat_id of the user is the same as the chat_id associated with the flight alert.
+    If the chat_id does not match, the function will send a message to the user with a red flag emoji and a message stating that the user is not allowed to do this.
+    If the chat_id matches, the function will call the decorated function.
+    """
     @wraps(func)
     async def wrapped(update, context, *args, **kwargs):
         chat_id = update.effective_chat.id
@@ -42,7 +54,13 @@ def verify_user_on_del_alert(func):
 
 
 def check_save_alert_limit(func):
-    """This decorator checks if the user has reached the tracked flight alert limit."""
+    """
+    Decorator that checks if the user is allowed to save a flight alert based on the global setting of flight alert limit.
+    
+    The function checks if the chat_id of the user has already reached the global setting of flight alert limit.
+    If the number of flight alerts have not reached the limit, the function will call the decorated function.
+    If the number of flight alerts has reached the limit, the function will send a message to the user with a red flag emoji and a message stating that the user is not allowed to do this. The function will also provide a button for the user to manage their flight alerts.
+    """
     @wraps(func)
     async def wrapped(update, context, *args, **kwargs):
         callback = update.callback_query
@@ -71,6 +89,9 @@ def check_save_alert_limit(func):
     return wrapped
 
 def admin_only(func):
+    """
+    Decorator that checks if the user is an administrator. If the user is an administrator, the function will call the decorated function. If the user is not an administrator, the function will send a message to the user with a red flag emoji and a message stating that the user is not allowed to do this. The function will also provide a button for the user to return to the main menu.
+    """
     @wraps(func)
     async def wrapped(update, context, *args, **kwargs):
         chat_id = update.effective_chat.id

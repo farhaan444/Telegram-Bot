@@ -14,9 +14,22 @@ from utils.decorators import send_action
 
 
 @send_action(action=ChatAction.TYPING)
-async def converstaion(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwargs):
-    """This function is a MESSAGE HANDLER. This function will optionaly take a keyword argument to initate a chat from the bot"""
+async def converstaion(update: Update, context: ContextTypes.DEFAULT_TYPE, **kwargs): 
+    """
+    Conversation handler. This function is responsible for handling user conversations.
+    It checks if user has clicked on flight type option and carries out the necessary
+    steps to complete the search. It also checks if user has entered a valid date and
+    provides an error message if the date is invalid. If the user has selected a flight
+    type but has not entered the required information, it will prompt the user to enter
+    the required information. If the user has not selected a flight type, it will prompt
+    the user to select a flight type.
 
+    :param update: The update object that contains the user's message
+    :type update: Update
+    :param context: The context object that contains the user's data
+    :type context: ContextTypes.DEFAULT_TYPE
+    """
+    
     chat_id = update.effective_chat.id
     text = update.message.text.strip()
 

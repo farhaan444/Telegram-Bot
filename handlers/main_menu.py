@@ -10,7 +10,13 @@ import os
 from utils.keyboards import main_menu
 
 
-async def handler_main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def handler_main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE): 
+    """
+    This is a Telegram Bot Command Handler.
+    It is invoked when the user types /menu in a Telegram chat.
+    The function will return a message with a random response from BotResponses/main_menu.txt.
+    The message will also include the Main Menu.
+    """
     
     FILE_PATH = os.path.join('BotResponses', 'main_menu.txt')
 

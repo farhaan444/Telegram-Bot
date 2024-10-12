@@ -5,20 +5,17 @@ _This Telegram bot allows users to conveniently find the cheapest flights and re
 ## Table of Contents
 
 - [About](#about)
+- [Features](#features)
 - [Getting Started](#getting-started)
-- [Prerequisites](#prerequisites)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
 - [License](#license)
+
 
 ## About
 
-We all want the cheapest possible flight but getting cheap flights is no easy task.
+We all love finding cheap flights, but it can often feel like a challenge. That’s where this Telegram Bot comes in!
 
-This Telegram Bot uses Kiwi flight api to search flights and return the current cheapest flight for your desired routes and dates.
-
-You can also save the flight result for the bot to track the flight price and the bot will notify you if the flight price has dropped.
+Powered by the Kiwi flight API, this bot makes it easy to search for the best deals on flights for your chosen routes and dates. Once you find a flight, you can even save it for price tracking. The bot will notify you if the price drops, so you’ll never miss out on a great deal!
 
 ## Features
 
@@ -27,12 +24,17 @@ You can also save the flight result for the bot to track the flight price and th
 - Flight Tracking.
 - KIWI API Support.
 - Inline And Keyboard Markup support.
+- Admin Panel.
+- Price Alerts.
 
 ### Bot Commands
 
 - `/start` - Initializes Bot welcome response.
 - `/flight_alerts` - Show all saved flight alerts.
+- `/menu` - Navigate to Main Menu.
 - `/reset` - Reset the flight search.
+- `/help` - Show Help.
+- `/admin` - Navigate to Admin Dashboard.
 
 ## Getting Started
 
@@ -44,17 +46,16 @@ You can also save the flight result for the bot to track the flight price and th
 
    | Env Variable      | Description                                              | Defaults               |
    | ----------------- | -------------------------------------------------------- | ---------------------- |
-   | `BOT_USERNAME`    | Your Telegram Bot Username                               | None                   |
    | `BOT_TOKEN`       | Your Telegram Bot Token                                  | None                   |
-   | `KIWI_API_KEY`    | Your KIWI API key                                        | None                   |
+   | `KIWI_API_KEY_STD`| Your KIWI API key for Oneway and Return flight search    | None                   |
+   | `KIWI_API_KEY_MULTICITY `| Your KIWI API key for Multicity flight search      | None                   |
    | `DATABASE_PATH`   | Your database file path                                  | `database\database.db` |
-   | `ADMINISTRATOR`   | Holds a list of telegram chat id's for admin rights      | []                     |
+   | `ADMINISTRATOR`   | Holds a list of telegram chat id's for admin rights      | [Integer]                     |
 
 
 ### Database
 
-This bot only supports a SQL database file. If you have an existing database file from previous use than edit your file path in your .env file.
-The default path is database\database.db which will be created automatically on the first call on the DB instance.
+This bot is compatible only with a SQL database file. If you have an existing database from prior use, make sure to update the file path in your .env file. The default path is database/database.db, which will be automatically created upon the first call to the database instance.
 
 ## Installation
 

@@ -10,7 +10,13 @@ from utils.keyboards import main_menu
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """This function is a COMMAND HANDLER. This function will only be called with the /start command"""
+    """
+    This function is a Telegram Bot Command Handler.
+    It is invoked when the user types /start in a Telegram chat.
+    The function will return a message with a greeting and a list of commands the bot can do.
+    The message will also include a button that will redirect the user to the main menu.
+    """
+    
     first_name = update.message.chat.first_name
     last_name = update.message.chat.last_name
     FILE_PATH = os.path.join('BotResponses', 'start_response.txt')

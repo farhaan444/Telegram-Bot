@@ -11,8 +11,15 @@ from utils.keyboards import main_menu
 
 @verify_user_on_del_alert
 async def del_flight_alert(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """This function will delete the a flight data alert from the database.
-    It uses the context.args to get the flight_data id from the command send to the user."""
+    """
+    This function is a Telegram Bot Message Handler.
+    It is invoked when the user types a message that starts with '/TAP_DELETE_ID_'.
+    The function will delete the flight alert with the id specified in the message.
+    If the flight alert does not exist, it will send a message to the user with a red flag emoji and a message stating that the flight alert does not exist.
+    If the flight alert exists, it will delete the flight alert and send a message to the user with a green checkmark emoji and a message stating that the flight alert has been deleted.
+    The function will also close the database connection.
+    """
+
     flight_alert_id = int(update.message.text.split('ID_')[1].strip())
     db = DB()
 

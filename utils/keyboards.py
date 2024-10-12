@@ -38,10 +38,19 @@ admin_menu = [[InlineKeyboardButton("Set Run Interval", callback_data='admin-FTj
 admin_menu = InlineKeyboardMarkup(admin_menu)
 
 def delete_all_menu(success=False):
-    """This function takes one argument: Success:Bool
-    The function will create a inline keyboard with two buttons
-    if True button1 = all flights deleted else button1 == Delete all flights.
-    button2 = Menu button redirect to main menu"""
+    """
+    Generates a InlineKeyboardMarkup for the delete all flight alert menu.
+
+    Parameters
+    ----------
+    success : bool, optional
+        Whether the deletion was successful or not. Defaults to False.
+
+    Returns
+    -------
+    InlineKeyboardMarkup
+        The delete all flight alert InlineKeyboardMarkup.
+    """
     if success:
         menu = [[InlineKeyboardButton('✅ All flight alerts deleted', callback_data='#')], [
             InlineKeyboardButton('≡ Menu', callback_data='main_menu')]]
@@ -54,9 +63,24 @@ def delete_all_menu(success=False):
         return menu
 
 def single_button(text: str, callback_data: str, url=None):
-    """This function takes two arguments, text, callback_data and url.
-    This is used to build a single button inline keyboard button.
-    callback_data and url both cannot be none"""
+    """
+    Generates a InlineKeyboardMarkup for a single button.
+
+    Parameters
+    ----------
+    text : str
+        The text on the button.
+    callback_data : str
+        The callback data for the button.
+    url : str, optional
+        The url to open when button is clicked. 
+        If set, callback_data will be set to None. Defaults to None.
+
+    Returns
+    -------
+    InlineKeyboardMarkup
+        The single button InlineKeyboardMarkup.
+    """
     if url != None:
         callback_data = None
     menu = [[InlineKeyboardButton(text, callback_data=callback_data)]]
@@ -64,10 +88,23 @@ def single_button(text: str, callback_data: str, url=None):
     return menu
 
 def flight_result_menu(link, tracked=False, err=False):
-    """This function takes a url arg and constructs a inline keyboard button that when clicked will open externaly.
-    It will also add a tracking button. Callback_data = None for the link button
-    tracked arg set to true to replace track Price to Flight tracked -- Default False"""
+    """
+    Generates a InlineKeyboardMarkup for a flight result.
 
+    Parameters
+    ----------
+    link : str
+        The link to the flight result.
+    tracked : bool, optional
+        Whether the flight is being tracked. Defaults to False.
+    err : bool, optional
+        Whether there was an error with the flight search. Defaults to False.
+
+    Returns
+    -------
+    InlineKeyboardMarkup
+        The InlineKeyboardMarkup for the flight result.
+    """
     if tracked:
         row1 = [InlineKeyboardButton(
             '✈️ Book Your Flight ✈️', url=link, callback_data=None)]
@@ -100,10 +137,20 @@ def flight_result_menu(link, tracked=False, err=False):
         menu = InlineKeyboardMarkup(button)
         return menu
 
-def flight_alert_menu(link):
-    """This function builds an inline keyboard
-    The function takes one argument: a url link must be parsed through
-    Two buttons are created, butt1= book flight, butt2= main menu redirect to main menu"""
+def flight_alert_menu(link): 
+    """
+    Generates a InlineKeyboardMarkup for a flight alert.
+
+    Parameters
+    ----------
+    link : str
+        The link to the flight result.
+
+    Returns
+    -------
+    InlineKeyboardMarkup
+        The InlineKeyboardMarkup for the flight alert.
+    """
     menu = [[InlineKeyboardButton('✈️ Book Your Flight ✈️', url=link, callback_data=None)], [
         InlineKeyboardButton('≡ Menu', callback_data="main_menu")]]
     menu = InlineKeyboardMarkup(menu)
@@ -112,7 +159,19 @@ def flight_alert_menu(link):
 # REPLY KEYBOARDS
 
 def airport_menu(airports: list):
-    """This function builds a reply keyboard for available airports"""
+    """
+    Generates a ReplyKeyboardMarkup for a list of airports.
+
+    Parameters
+    ----------
+    airports : list
+        A list of airport names or codes.
+
+    Returns
+    -------
+    ReplyKeyboardMarkup
+        The ReplyKeyboardMarkup for the list of airports.
+    """
     buttons = []
     for i in range(len(airports)):
         buttons.append([KeyboardButton(airports[i])])
@@ -120,7 +179,14 @@ def airport_menu(airports: list):
     return menu
 
 def adults_menu():
-    """This function will build and return a reply keyboard for possible number of adults to travel."""
+    """
+    Generates a ReplyKeyboardMarkup for a list of adult numbers.
+
+    Returns
+    -------
+    ReplyKeyboardMarkup
+        The ReplyKeyboardMarkup for the list of adult numbers.
+    """
     adults = ['1', '2', '3', '4']
     buttons = []
     for i in range(len(adults)):

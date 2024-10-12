@@ -10,7 +10,13 @@ from utils.keyboards import main_menu_redirect
 
 
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
-
+    """
+    This function is a Telegram Bot Command Handler.
+    It is invoked when the user types /help in a Telegram chat.
+    The function will return a message with the help text.
+    The message will also include a button to go back to the main menu.
+    """
+    
     FILE_PATH = os.path.join('BotResponses', 'help.txt')
 
     with open(FILE_PATH, encoding='utf-8') as file:

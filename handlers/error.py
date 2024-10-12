@@ -11,7 +11,21 @@ logger = logging.getLogger(__name__)
 
 
 async def errors(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Error handler that handles bot errors and prints out errors to console """
+    """
+    Error handler for the telegram bot.
+    
+    This function is called when an exception is raised in any of the 
+    command handlers or message handlers. It logs the exception and 
+    sends a message to the administrators specified in the config.
+
+    Args:
+        update (Update): The update object.
+        context (ContextTypes.DEFAULT_TYPE): The context object.
+
+    Returns:
+        None
+    """
+    
     logger.exception(context.error)
     curr_datetime = datetime.datetime.now()
     error = context.error
