@@ -2,6 +2,8 @@
 
 _This Telegram bot allows users to conveniently find the cheapest flights and receive price alerts for their desired routes._
 
+Try out the [Flight Spotter Bot](https://t.me/FlightSpotter_Bot) on Telegram. 
+
 ## Table of Contents
 
 - [About](#about)
@@ -19,7 +21,7 @@ Powered by the Kiwi flight API, this bot makes it easy to search for the best de
 
 ## Features
 
-- Live Flight Search (Oneway & Return Flight Search).
+- Live Flight Search (Oneway,Return and Multi-City Flight Search).
 - Support for User input validation.
 - Flight Tracking.
 - KIWI API Support.
