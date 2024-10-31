@@ -50,9 +50,9 @@ Powered by the Kiwi flight API, this bot makes it easy to search for the best de
    | ----------------- | -------------------------------------------------------- | ---------------------- |
    | `BOT_TOKEN`       | Your Telegram Bot Token                                  | None                   |
    | `KIWI_API_KEY_STD`| Your KIWI API key for Oneway and Return flight search    | None                   |
-   | `KIWI_API_KEY_MULTICITY `| Your KIWI API key for Multicity flight search      | None                   |
-   | `DATABASE_PATH`   | Your database file path                                  | `database\database.db` |
-   | `ADMINISTRATOR`   | Holds a list of telegram chat id's for admin rights      | [Integer]                     |
+   | `KIWI_API_KEY_MULTICITY `| Your KIWI API key for Multicity flight search     | None                   |
+   | `DATABASE_PATH`   | Your database file path                                  | `database.db`          |
+   | `ADMINISTRATOR`   | Holds a list of telegram chat id's for admin rights      | [Integer]              |
 
 
 ### Database

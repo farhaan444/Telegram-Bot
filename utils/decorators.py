@@ -83,7 +83,7 @@ def check_save_alert_limit(func):
                 else:
                     button = single_button(
                         text='🔔 Manage flight alerts', callback_data='get_flight_alerts')
-                    return await context.bot.send_message(chat_id=chat_id, text=f'❗Only {file["FT_LIMIT"]} flights alert are allowed to be tracked at this time.', reply_markup=button)
+                    return await context.bot.send_message(chat_id=chat_id, text=f'❗Only {ft_limit} flights alert are allowed to be tracked at this time.', reply_markup=button)
             else:
                 return await func(update, context, *args, **kwargs)
     return wrapped
