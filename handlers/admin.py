@@ -4,7 +4,6 @@
 from telegram import Update
 from telegram.ext import ContextTypes
 from telegram.constants import ChatAction
-import json
 from utils.database import DB
 from telegram.constants import ParseMode
 from utils.flight_search import validate_number, is_int_0
@@ -42,7 +41,7 @@ async def admin_dashboard(update: Update, context: ContextTypes.DEFAULT_TYPE):
             
 <b>USER DATA</b>
 👫 Total Users: {USER_COUNT}
-🔔 Tolal Flight Alerts: {FA_COUNT}
+🔔 Total Flight Alerts: {FA_COUNT}
 
 <b>JOBS</b>
 <i>Flight Tracker Job</i>
